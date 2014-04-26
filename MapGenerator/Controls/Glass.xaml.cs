@@ -12,24 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MapGenerator;
 
-namespace Ants
+namespace MapGenerator.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Glass.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Glass : UserControl
     {
-        private MapControl _mapControl = new MapControl();
-        public MainWindow()
-        {
-            InitializeComponent();
+        public Point Position { get; set; }
 
-            //var map = this.FindResource("MapViewGrid") as Grid;
-            //map.
-            //sbLevel.Begin();
-            MapViewGrid.Children.Add(_mapControl);
+        public Glass(int x, int y)
+        {
+            Position = new Point(x, y);
+            InitializeComponent();
         }
+
     }
 }

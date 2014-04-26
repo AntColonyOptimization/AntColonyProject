@@ -3,41 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="357*"/>
-            <ColumnDefinition Width="60*"/>
-        </Grid.ColumnDefinitions>
-        <Image Grid.Column="1" HorizontalAlignment="Left" Height="142" Margin="141,116,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-27.289"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Label Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="124" RenderTransformOrigin="0.5,0.5">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-47.625"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-        <Button Content="BBB" Grid.Column="1" HorizontalAlignment="Left" Margin="250,234,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.774,3.773">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-33.912"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <!--<GradientStop Offset="0.0" Color="#FF0060C0"/>-->
+                <GradientStop Offset="1.0" Color="#FF001020"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid x:Name="HeadGrid">
+        </Grid>
+        <Grid Grid.Row="1" x:Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="MapGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <Grid x:Name="MapViewGrid" />
+                <Grid Grid.Row="1" x:Name="MapConfigGrid"></Grid>
+            </Grid>
+            <Grid Grid.Column="1" x:Name="ConfigGrid">
+            
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>
