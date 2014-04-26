@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ants", "Ants\Ants.csproj", "{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "MapGenerator\MapGenerator.csproj", "{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
