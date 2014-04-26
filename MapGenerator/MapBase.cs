@@ -86,7 +86,7 @@ namespace MapGenerator
             //wczytywanie z pliku
             var filePath = string.Format(fileName);
 
-            using (var sr = new StreamReader(filePath))
+            using (var sr = new StreamReader(string.Format(@"MapSource\{0}", fileName)))
             {
                 var l = 0;
                 while (!sr.EndOfStream)
