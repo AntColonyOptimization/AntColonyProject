@@ -25,7 +25,8 @@ namespace Ants
         public MainWindow()
         {
             InitializeComponent();
-
+            //Algorithm a = new Algorithm();
+            //a.Execute();
             //var map = this.FindResource("MapViewGrid") as Grid;
             //map.
             //sbLevel.Begin();
