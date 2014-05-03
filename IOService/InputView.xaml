@@ -37,12 +37,12 @@
             <Label Content="Liczba iteracji" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Liczba mrówek" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="100" Text="{Binding Path=Input.Alpha}"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Width="100" />
-            <TextBox Grid.Column="1" Grid.Row="2" Width="100" />
-            <TextBox Grid.Column="1" Grid.Row="3" Width="100" />
-            <TextBox Grid.Column="1" Grid.Row="4" Width="100" />
-            <TextBox Grid.Column="1" Grid.Row="5" Width="100" />
+            <TextBox Grid.Column="1" Grid.Row="0" Width="100" Text="{Binding Path=Alpha}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Width="100" Text="{Binding Path=Beta}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Width="100" Text="{Binding Path=Rho}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Width="100" Text="{Binding Path=Q}"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Width="100" Text="{Binding Path=NumberOfIterations}"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Width="100" Text="{Binding Path=NumberOfAnts}"/>
 
         </Grid>
 

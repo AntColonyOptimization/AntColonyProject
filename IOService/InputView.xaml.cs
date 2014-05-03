@@ -12,7 +12,7 @@
             InitializeComponent();
 
             Input = new InputService();
-            DataGrid.DataContext = this;
+            DataGrid.DataContext = Input;
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)

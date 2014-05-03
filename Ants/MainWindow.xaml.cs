@@ -28,15 +28,12 @@ namespace Ants
         public MainWindow()
         {
             InitializeComponent();
-<<<<<<< HEAD
 
             this.Width = _mapControl.Width + _inputView.Width;
             this.Height = Math.Max(_mapControl.Height, _inputView.Height);
 
-=======
             //Algorithm a = new Algorithm();
             //a.Execute();
->>>>>>> 7042bb26f97e8b01e6a47a29123be6139e6d19a9
             //var map = this.FindResource("MapViewGrid") as Grid;
             //map.
             //sbLevel.Begin();

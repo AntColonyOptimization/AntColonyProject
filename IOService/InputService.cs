@@ -1,22 +1,190 @@
 ﻿namespace IOService
 {
     using IOService.Core;
+    using System.ComponentModel;
 
-    public class InputService : IInputService
+    public class InputService : IInputService, INotifyPropertyChanged
     {
-        public double Alpha { get; set; }
-        public double Beta { get; set; }
-        public double Rho { get; set; }
-        public double Q { get; set; }
-        public int NumberOfIterations { get; set; }
-        public int NumberOfAnts { get; set; }
+        private double _alpha;
 
-        public bool CheckBox1 { get; set; }
-        public bool CheckBox2 { get; set; }
-        public bool CheckBox3 { get; set; }
-        public bool CheckBox4 { get; set; }
-        public bool CheckBox5 { get; set; }
-        public bool CheckBox6 { get; set; }
+        public double Alpha 
+        { 
+            get
+            {
+                return _alpha;
+            }
+            set 
+            {
+                _alpha = value;
+                NotifyPropertyChanged("Alpha");
+            }
+        }
+
+        private double _beta;
+
+        public double Beta
+        {
+            get
+            {
+                return _beta;
+            }
+            set
+            {
+                _beta = value;
+                NotifyPropertyChanged("Beta");
+            }
+        }
+
+        private double _rho;
+
+        public double Rho
+        {
+            get
+            {
+                return _rho;
+            }
+            set
+            {
+                _rho = value;
+                NotifyPropertyChanged("Rho");
+            }
+        }
+
+        private double _q;
+
+        public double Q
+        {
+            get
+            {
+                return _q;
+            }
+            set
+            {
+                _q = value;
+                NotifyPropertyChanged("Q");
+            }
+        }
+
+        private int _numberOfIterations;
+
+        public int NumberOfIterations
+        {
+            get
+            {
+                return _numberOfIterations;
+            }
+            set
+            {
+                _numberOfIterations = value;
+                NotifyPropertyChanged("NumberOfIterations");
+            }
+        }
+
+        private int _numberOfAnts;
+
+        public int NumberOfAnts
+        {
+            get
+            {
+                return _numberOfAnts;
+            }
+            set
+            {
+                _numberOfAnts = value;
+                NotifyPropertyChanged("NumberOfAnts");
+            }
+        }
+
+        private bool _checkBox1;
+
+        public bool CheckBox1
+        {
+            get
+            {
+                return _checkBox1;
+            }
+            set
+            {
+                _checkBox1 = value;
+                NotifyPropertyChanged("CheckBox1");
+            }
+        }
+
+        private bool _checkBox2;
+
+        public bool CheckBox2
+        {
+            get
+            {
+                return _checkBox2;
+            }
+            set
+            {
+                _checkBox2 = value;
+                NotifyPropertyChanged("CheckBox2");
+            }
+        }
+
+        private bool _checkBox3;
+
+        public bool CheckBox3
+        {
+            get
+            {
+                return _checkBox3;
+            }
+            set
+            {
+                _checkBox3 = value;
+                NotifyPropertyChanged("CheckBox3");
+            }
+        }
+
+        private bool _checkBox4;
+
+        public bool CheckBox4
+        {
+            get
+            {
+                return _checkBox4;
+            }
+            set
+            {
+                _checkBox4 = value;
+                NotifyPropertyChanged("CheckBox4");
+            }
+        }
+
+        private bool _checkBox5;
+
+        public bool CheckBox5
+        {
+            get
+            {
+                return _checkBox5;
+            }
+            set
+            {
+                _checkBox5 = value;
+                NotifyPropertyChanged("CheckBox5");
+            }
+        }
+
+        private bool _checkBox6;
+
+        public bool CheckBox6
+        {
+            get
+            {
+                return _checkBox6;
+            }
+            set
+            {
+                _checkBox6 = value;
+                NotifyPropertyChanged("CheckBox6");
+            }
+        }
+
 
         public InputService()
         {
@@ -26,6 +194,16 @@
             Q = 50.0;
             NumberOfIterations = 100;
             NumberOfAnts = 3;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void NotifyPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
