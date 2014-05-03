@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MapGenerator;
-using IOService;
-
-namespace Ants
+﻿namespace Ants
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    using System;
+    using System.Windows;
+    using MapGenerator;
+    using IOService;
+    using IOService.Core;
+
     public partial class MainWindow : Window
     {
         private MapControl _mapControl = new MapControl();
@@ -29,8 +15,7 @@ namespace Ants
         {
             InitializeComponent();
 
-            this.Width = _mapControl.Width + _inputView.Width;
-            this.Height = Math.Max(_mapControl.Height, _inputView.Height);
+            _inputView.RunAlgorithm += RunAlgorithm;
 
             //Algorithm a = new Algorithm();
             //a.Execute();
@@ -41,6 +26,13 @@ namespace Ants
             MapViewGrid.Width = _mapControl.Width;
             ConfigGrid.Children.Add(_inputView);
             ConfigGrid.Width = _inputView.Width;
+        }
+
+        void RunAlgorithm(IInputService input)
+        {
+            Algorithm algorithm = new Algorithm(input);
+
+            algorithm.Execute();
         }
     }
 }

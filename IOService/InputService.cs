@@ -194,6 +194,13 @@
             Q = 50.0;
             NumberOfIterations = 100;
             NumberOfAnts = 3;
+
+            CheckBox1 = true;
+            CheckBox2 = true;
+            CheckBox3 = true;
+            CheckBox4 = true;
+            CheckBox5 = true;
+            CheckBox6 = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

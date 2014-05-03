@@ -1,12 +1,11 @@
-﻿using System;
+﻿using IOService.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-
-
 
 namespace Ants
 {
@@ -43,17 +42,15 @@ namespace Ants
 
         List<List<Coordinates>> path = new List<List<Coordinates>>();
 
-
-
-        public Algorithm()
+        public Algorithm(IInputService input)
         {
-            alpha = 3;
-            beta = 10;
-            rho = 0.01;
-            Q = 50.0;
+            alpha = input.Alpha;
+            beta = input.Beta;
+            rho = input.Rho;
+            Q = input.Q;
             pheromoneInit = 0.01;
-            numIter = 100;
-            numAnts = 3;
+            numIter = input.NumberOfIterations;
+            numAnts = input.NumberOfAnts;
             currentAnt = 0;
             bestLength = 99999999;
             mainIterator = 0;

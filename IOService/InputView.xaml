@@ -40,6 +40,13 @@
             <Label Content="Liczba iteracji" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Liczba mrówek" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
 
+            <Label Content="Checkbox1" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Checkbox2" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Checkbox3" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Checkbox4" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Checkbox5" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Checkbox6" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+
             <TextBox Grid.Column="1" Grid.Row="0" Width="75" Text="{Binding Path=Alpha}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="1" Width="75" Text="{Binding Path=Beta}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="2" Width="75" Text="{Binding Path=Rho}" VerticalAlignment="Center"/>
@@ -47,6 +54,13 @@
             <TextBox Grid.Column="1" Grid.Row="4" Width="75" Text="{Binding Path=NumberOfIterations}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="5" Width="75" Text="{Binding Path=NumberOfAnts}" VerticalAlignment="Center"/>
 
+            <CheckBox Grid.Column="1" Grid.Row="6" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox1" Foreground="White" IsChecked="{Binding Path=CheckBox1}"/>
+            <CheckBox Grid.Column="1" Grid.Row="7" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox2" Foreground="White" IsChecked="{Binding Path=CheckBox2}"/>
+            <CheckBox Grid.Column="1" Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox3" Foreground="White" IsChecked="{Binding Path=CheckBox3}"/>
+            <CheckBox Grid.Column="1" Grid.Row="9" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox4" Foreground="White" IsChecked="{Binding Path=CheckBox4}"/>
+            <CheckBox Grid.Column="1" Grid.Row="10" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox5" Foreground="White" IsChecked="{Binding Path=CheckBox5}"/>
+            <CheckBox Grid.Column="1" Grid.Row="11" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox6" Foreground="White" IsChecked="{Binding Path=CheckBox6}"/>
+            
         </Grid>
 
     </Canvas>
