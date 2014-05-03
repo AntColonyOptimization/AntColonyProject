@@ -4,17 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="450" d:DesignWidth="200" Height="450" Width="200">
     <Canvas x:Name="canvas">
         <Canvas.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Offset="1.0" Color="#001932"/>
             </LinearGradientBrush>
         </Canvas.Background>
-        <Button Content="Uruchom algorytm" Canvas.Left="140" Canvas.Top="270" Width="150" Click="Button_Click"/>
-        
-        <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="250" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
+        <Button Content="Uruchom algorytm" Canvas.Left="40" Canvas.Top="420" Width="150" Click="Button_Click"/>
+
+        <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="400" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
             <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
@@ -23,9 +29,6 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -37,12 +40,12 @@
             <Label Content="Liczba iteracji" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Liczba mrówek" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="100" Text="{Binding Path=Alpha}"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Width="100" Text="{Binding Path=Beta}"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="100" Text="{Binding Path=Rho}"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Width="100" Text="{Binding Path=Q}"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Width="100" Text="{Binding Path=NumberOfIterations}"/>
-            <TextBox Grid.Column="1" Grid.Row="5" Width="100" Text="{Binding Path=NumberOfAnts}"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Width="75" Text="{Binding Path=Alpha}" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Width="75" Text="{Binding Path=Beta}" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Width="75" Text="{Binding Path=Rho}" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Width="75" Text="{Binding Path=Q}" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Width="75" Text="{Binding Path=NumberOfIterations}" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Width="75" Text="{Binding Path=NumberOfAnts}" VerticalAlignment="Center"/>
 
         </Grid>
 
