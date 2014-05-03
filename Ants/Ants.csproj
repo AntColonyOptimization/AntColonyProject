@@ -94,6 +94,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IOService\IOService.csproj">
+      <Project>{ad05e2f2-eba0-416d-99a2-012e9b61ee67}</Project>
+      <Name>IOService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapGenerator\MapGenerator.csproj">
       <Project>{93b62a5f-5dd1-4f6a-a1fe-5de93d9899b9}</Project>
       <Name>MapGenerator</Name>

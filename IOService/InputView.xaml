@@ -13,8 +13,11 @@
         </Canvas.Background>
         <Button Content="Uruchom algorytm" Canvas.Left="140" Canvas.Top="270" Width="150" Click="Button_Click"/>
         
-        <Grid Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="250" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
+        <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="250" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
             <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
@@ -27,10 +30,20 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Wartość 1" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Wartość 1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Wartość 1" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            
+            <Label Content="Alpha" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Beta" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Rho" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Q" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Liczba iteracji" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            <Label Content="Liczba mrówek" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+
+            <TextBox Grid.Column="1" Grid.Row="0" Width="100" Text="{Binding Path=Input.Alpha}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Width="100" />
+            <TextBox Grid.Column="1" Grid.Row="2" Width="100" />
+            <TextBox Grid.Column="1" Grid.Row="3" Width="100" />
+            <TextBox Grid.Column="1" Grid.Row="4" Width="100" />
+            <TextBox Grid.Column="1" Grid.Row="5" Width="100" />
+
         </Grid>
 
     </Canvas>

@@ -5,13 +5,14 @@
 
     public partial class InputView : UserControl
     {
-        private IInputService _inputService;
+        private IInputService Input { get; set; }
 
         public InputView()
         {
             InitializeComponent();
 
-            _inputService = new InputService();
+            Input = new InputService();
+            DataGrid.DataContext = this;
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)

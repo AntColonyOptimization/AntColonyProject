@@ -17,7 +17,7 @@
         </Grid>
         <Grid Grid.Row="1" x:Name="MainGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid x:Name="MapGrid">
