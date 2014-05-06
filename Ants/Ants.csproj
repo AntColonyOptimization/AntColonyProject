@@ -60,7 +60,8 @@
     <Compile Include="Algorithm\Algorithm.cs" />
     <Compile Include="Algorithm\Coordinates.cs" />
     <Compile Include="Algorithm\IAlgorithm.cs" />
-    <Compile Include="Algorithm\OutputAlgorithm.cs" />
+    <Compile Include="Algorithm\IOutputService.cs" />
+    <Compile Include="Algorithm\OutputService.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

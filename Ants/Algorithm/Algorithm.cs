@@ -42,6 +42,8 @@ namespace Ants
         private int currentAnt;
         private List<List<Coordinates>> path = new List<List<Coordinates>>();
 
+        private IOutputService _outputService;
+
         public List<List<double>> Pheromones
         {
             get
@@ -79,9 +81,11 @@ namespace Ants
             }
             ReadMapFromFile();
             CalculateDistances();
+
+            _outputService = new OutputService();
         }
 
-        public OutputAlgorithm Execute()
+        public IOutputService Execute()
         {
             if(mainIterator < numIter)
             {
@@ -91,14 +95,23 @@ namespace Ants
                 }
                 updatePheromones();//pheromones are updated after all the ants in one operation found path
                 mainIterator++;
-                OutputAlgorithm output = new OutputAlgorithm(pheromones, path, bestPath);
-                return output;
+
+                _outputService.Pheromones = pheromones;
+                _outputService.CurrentPaths = path;
+                _outputService.BestPath = bestPath;
+
+                return _outputService;
             }
             if(mainIterator==numIter)
             {
                 isFinished = true;
             }
-            return new OutputAlgorithm(pheromones, path, bestPath);
+
+            _outputService.Pheromones = pheromones;
+            _outputService.CurrentPaths = path;
+            _outputService.BestPath = bestPath;
+
+            return _outputService;
         }
 
         public bool IsFinished()
@@ -213,7 +226,6 @@ namespace Ants
             }
             if (sum == 0)
             {
-                int a = 10;
                 throw new Exception("sum=0, wszystkie pola w kolo zostaly odwiedzone");
                 //go random
             }

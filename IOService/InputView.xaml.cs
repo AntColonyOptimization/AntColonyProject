@@ -10,6 +10,7 @@
         private IInputService Input { get; set; }
 
         public event RunAlgorithmEventHandler RunAlgorithm;
+        public event RunAlgorithmEventHandler StepAlgorithm;
 
         public InputView()
         {
@@ -24,6 +25,14 @@
             if(RunAlgorithm != null)
             {
                 RunAlgorithm(Input);
+            }
+        }
+
+        private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(StepAlgorithm != null)
+            {
+                StepAlgorithm(Input);
             }
         }
     }

@@ -8,41 +8,19 @@ namespace Ants
 {
     public class Coordinates
     {
-        private int height;
-        private int width;
-        public int Height
-        {
-            get
-            {
-                return this.height;
-            }
-            set
-            {
-                this.height = value;
-            }
-        }
-        public int Width
-        {
-            get
-            {
-                return this.width;
-            }
-            set
-            {
-                this.width = value;
-            }
-        }
+        public int Height { get; set; }
+        public int Width { get; set; }
 
         public Coordinates(int h, int w)
         {
-            height = h;
-            width = w;
+            Height = h;
+            Width = w;
         }
 
         public void SetOffset(Coordinates offset)
         {
-            width += offset.Width;
-            height += offset.Height;
+            Width += offset.Width;
+            Height += offset.Height;
         }
 
         public override bool Equals(object o)

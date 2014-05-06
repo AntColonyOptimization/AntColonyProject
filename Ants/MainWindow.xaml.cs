@@ -5,9 +5,15 @@
     using MapGenerator;
     using IOService;
     using IOService.Core;
+    using System.Threading.Tasks;
 
     public partial class MainWindow : Window
     {
+        private const int _delay = 10;
+
+        private IAlgorithm _algorithm;
+        private IInputService _input;
+
         private MapControl _mapControl = new MapControl();
         private InputView _inputView = new InputView();
 
@@ -16,6 +22,8 @@
             InitializeComponent();
 
             _inputView.RunAlgorithm += RunAlgorithm;
+            _inputView.StepAlgorithm += StepAlgorithm;
+
 
             //Algorithm a = new Algorithm();
             //a.Execute();
@@ -28,14 +36,34 @@
             ConfigGrid.Width = _inputView.Width;
         }
 
-        void RunAlgorithm(IInputService input)
+        private async void RunAlgorithm(IInputService input)
         {
-            Algorithm algorithm = new Algorithm(input);
-            OutputAlgorithm output;
-            while (!algorithm.IsFinished())
+            if (_input == null || _algorithm == null || _input != input)
             {
-                output = algorithm.Execute();
-                int a = 1;
+                _input = input;
+                _algorithm = new Algorithm(input);
+            }
+
+            IOutputService output;
+            while (!_algorithm.IsFinished())
+            {
+                output = _algorithm.Execute();
+                await Task.Delay(_delay);
+            }
+        }
+
+        private void StepAlgorithm(IInputService input)
+        {
+            if (input == null || _algorithm == null || _input != input)
+            {
+                _input = input;
+                _algorithm = new Algorithm(input);
+            }
+
+            IOutputService output;
+            if(!_algorithm.IsFinished())
+            {
+                output = _algorithm.Execute();
             }
         }
     }
