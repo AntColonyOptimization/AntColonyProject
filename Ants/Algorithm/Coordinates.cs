@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ants
 {
-    class Coordinates
+    public class Coordinates
     {
         private int height;
         private int width;

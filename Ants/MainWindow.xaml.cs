@@ -31,8 +31,12 @@
         void RunAlgorithm(IInputService input)
         {
             Algorithm algorithm = new Algorithm(input);
-
-            algorithm.Execute();
+            OutputAlgorithm output;
+            while (!algorithm.IsFinished())
+            {
+                output = algorithm.Execute();
+                int a = 1;
+            }
         }
     }
 }
