@@ -6,18 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using Ants.Map;
 
 namespace Ants
 {
     public class Algorithm: IAlgorithm
     {
-        private int height;
-        private int width;
-        private static char symbolStart = 'S';
-        private static char symbolDestination = 'F';
-        private static char symbolObstacle = 'x';
-        private static char symbolFreeToGo = '0';
-        private static string mapCatalogPath = @"../../../MapGenerator/MapSource/map.txt";
+        //private int height;
+        //private int width;
 
         private double alpha;
         private double beta;
@@ -32,9 +28,7 @@ namespace Ants
         private List<Coordinates> bestPath;
         private Random random = new Random();
         private int mainIterator;
-        private Coordinates start;
-        private Coordinates destination;
-        private List<List<char>> map = new List<List<char>>();
+
         private List<List<double>> distances = new List<List<double>>();
         private List<List<double>> pheromones = new List<List<double>>();
         private List<List<int>> numOfVisits = new List<List<int>>();
@@ -79,7 +73,7 @@ namespace Ants
             {
                 path.Add(new List<Coordinates>());
             }
-            ReadMapFromFile();
+            //ReadMapFromFile();
             CalculateDistances();
 
             _outputService = new OutputService();
@@ -89,11 +83,12 @@ namespace Ants
         {
             if(mainIterator < numIter)
             {
+                var map = Map.MapGenerator.Instance.GetMap();
                 for (currentAnt = 0; currentAnt < numAnts; currentAnt++)
                 {
-                    BuildPath();
+                    BuildPath(map);
                 }
-                updatePheromones();//pheromones are updated after all the ants in one operation found path
+                updatePheromones(map);//pheromones are updated after all the ants in one operation found path
                 mainIterator++;
 
                 _outputService.Pheromones = pheromones;
@@ -119,60 +114,32 @@ namespace Ants
             return isFinished;
         }
 
-        private void resetNumOfVisits()
+        private void resetNumOfVisits(Map.Map map)
         {
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < map.Height; i++)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < map.Width; j++)
                 {
                     numbersOfVisits[i, j] = 0;
                 }
             }
         }
 
-        private void ReadMapFromFile()
-        {
-            string[] lines = System.IO.File.ReadAllLines(mapCatalogPath);
-
-             for (int i = 0; i < lines.Length; i++)
-            {
-                map.Add(new List<char>());
-                string[] line = lines[i].Split(' ');
-                height = lines.Length;
-                width = line.Length;
-                for (int j = 0; j < line.Length; j++)
-                {
-                    if ((line[0] != "#")) //to skip comment lines
-                    {
-                        map[i].Add(char.Parse(line[j]));
-                        if (map[i][j] == symbolDestination)
-                        {
-                            destination = new Coordinates(j, i);
-                        }
-                        if (map[i][j] == symbolStart)
-                        {
-                            start = new Coordinates(j, i);
-                        }
-                    }
-                }  
-            }
-        }
-
-
         private void CalculateDistances()
         {
             int tempWidth;
             int tempHeight;
-            for (int i = 0; i < height; i++)
+            var map = Map.MapGenerator.Instance.GetMap();
+            for (int i = 0; i < map.Height; i++)
             {
                 distances.Add(new List<double>());
                 pheromones.Add(new List<double>());
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < map.Width; j++)
                 {
-                    if (map[i][j] != symbolObstacle)
+                    if (map.MapDescription[i][j] != Map.MapGenerator.SymbolObstacle)
                     {
-                        tempWidth = (destination.Width - j) * (destination.Width - j);
-                        tempHeight = (destination.Height - i) * (destination.Height - i);
+                        tempWidth = (map.Destination.Width - j) * (map.Destination.Width - j);
+                        tempHeight = (map.Destination.Height - i) * (map.Destination.Height - i);
                         distances[i].Add(Math.Sqrt(tempWidth + tempHeight));
                         pheromones[i].Add(pheromoneInit);
                     }
@@ -187,20 +154,21 @@ namespace Ants
 
         private double[,] CalculateProbabilities(Coordinates currentPos)
         {
+            var map = Map.MapGenerator.Instance.GetMap();
             double[,] taueta = new double[3, 3];
             double sum = 0.0;
             int setValue = 0;
             int minHeight = (currentPos.Height - 1 < 0) ? 0 : currentPos.Height - 1;
             int minWidth = (currentPos.Width - 1 < 0) ? 0 : currentPos.Width - 1;
-            int maxHeight = (currentPos.Height + 2 >= height) ? height : currentPos.Height + 2;
-            int maxWidth = (currentPos.Width + 2 >= width) ? width : currentPos.Width + 2;
+            int maxHeight = (currentPos.Height + 2 >= map.Height) ? map.Height : currentPos.Height + 2;
+            int maxWidth = (currentPos.Width + 2 >= map.Width) ? map.Width : currentPos.Width + 2;
             while (sum == 0)
             {
                 for (int i = minHeight; i < maxHeight; i++)
                 {
                     for (int j = minWidth; j < maxWidth; j++)
                     {
-                        if (map[i][j] != symbolObstacle)
+                        if (map.MapDescription[i][j] != Map.MapGenerator.SymbolObstacle)
                         {
                             if (i == currentPos.Height && j == currentPos.Width)
                             {
@@ -270,13 +238,13 @@ namespace Ants
             //throw new Exception("Failure to return valid city in NextCity");
         }
 
-        private void BuildPath()
+        private void BuildPath(Map.Map map)
         {
-            resetNumOfVisits();
+            resetNumOfVisits(map);
             path[currentAnt] = new List<Coordinates>();
-            path[currentAnt].Add(start);
-            numbersOfVisits[start.Height, start.Width]++;
-            while (!IsDestinationFound((Coordinates)path[currentAnt][path[currentAnt].Count - 1]))
+            path[currentAnt].Add(map.Start);
+            numbersOfVisits[map.Start.Height, map.Start.Width]++;
+            while (!IsDestinationFound((Coordinates)path[currentAnt][path[currentAnt].Count - 1], map))
             {
                 Coordinates currentPos = (Coordinates)path[currentAnt][path[currentAnt].Count - 1];
                 Coordinates next = FindNextStep(currentPos);
@@ -292,13 +260,13 @@ namespace Ants
             }
         }
 
-        private bool IsDestinationFound(Coordinates pos)
+        private bool IsDestinationFound(Coordinates pos, Map.Map map)
         {
-            return Math.Abs(pos.Height - destination.Height) <= 1 && Math.Abs(pos.Width - destination.Width) <= 1;
+            return Math.Abs(pos.Height - map.Destination.Height) <= 1 && Math.Abs(pos.Width - map.Destination.Width) <= 1;
             //stop conditions, last found must be next to dest.
         }
 
-        private void updatePheromones()
+        private void updatePheromones(Map.Map map)
         {
             double length = 0;
             double decrease = 0;
@@ -306,9 +274,9 @@ namespace Ants
             for (int k = 0; k < numAnts; k++)
             {
                 length = path[k].Count;
-                for (int i = 0; i < height; i++)
+                for (int i = 0; i < map.Height; i++)
                 {
-                    for (int j = 0; j < width; j++)
+                    for (int j = 0; j < map.Width; j++)
                     {
                         decrease = (1.0 - rho) * pheromones[i][j];
                         increase = 0.0;

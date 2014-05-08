@@ -70,8 +70,46 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Map\Controls\DestinationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Map\Controls\StartControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Map\Controls\ObstacleControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Map\MapInput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Map\MapControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Map\Controls\DestinationControl.xaml.cs">
+      <DependentUpon>DestinationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map\Controls\StartControl.xaml.cs">
+      <DependentUpon>StartControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map\Controls\ObstacleControl.xaml.cs">
+      <DependentUpon>ObstacleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Map\MapInput.xaml.cs">
+      <DependentUpon>MapInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map\MapControl.xaml.cs">
+      <DependentUpon>MapControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map\MapGenerator.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,10 +141,14 @@
       <Project>{ad05e2f2-eba0-416d-99a2-012e9b61ee67}</Project>
       <Name>IOService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MapGenerator\MapGenerator.csproj">
-      <Project>{93b62a5f-5dd1-4f6a-a1fe-5de93d9899b9}</Project>
-      <Name>MapGenerator</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Map\Source\map2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Map\Source\map.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ants", "Ants\Ants.csproj", "{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "MapGenerator\MapGenerator.csproj", "{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOService", "IOService\IOService.csproj", "{AD05E2F2-EBA0-416D-99A2-012E9B61EE67}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8EC8B6F-6267-4C46-8CAB-2C0B9D25C1C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93B62A5F-5DD1-4F6A-A1FE-5DE93D9899B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD05E2F2-EBA0-416D-99A2-012E9B61EE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD05E2F2-EBA0-416D-99A2-012E9B61EE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD05E2F2-EBA0-416D-99A2-012E9B61EE67}.Release|Any CPU.ActiveCfg = Release|Any CPU

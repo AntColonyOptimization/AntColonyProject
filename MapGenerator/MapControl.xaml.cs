@@ -23,43 +23,66 @@ namespace MapGenerator
     {
         public double CellWidth { get; private set; }
 
-        private MapBase _map = new MapBase();
+        //public MapBase _mapBase = new MapBase();
 
         public MapControl()
         {
             InitializeComponent();
+            LoadMapView();
             //CellWidth = CalculateCellWidth();
-            CreateMazeGrid();
-            RefreshMapView();
+            //CreateMazeGrid();
+            //RefreshMapView();
         }
 
-        private void RefreshMapView()
+        //private void RefreshMapView()
+        //{
+        //    for (var i = 0; i < _mapBase.MapWidth; i++)
+        //    {
+        //        for (var j = 0; j < _mapBase.MapHeight; j++)
+        //        {
+        //            // przeszkody
+        //            if (_mapBase.MapDescription[i, j] == '1')
+        //            {
+        //                var glass = new Glass(i, j);
+        //                glass.SetValue(Grid.ColumnProperty, i);
+        //                glass.SetValue(Grid.RowProperty, j);
+        //                MapControlGrid.Children.Add(glass);
+        //            }
+
+        //            ////start (mrowisko)
+        //            //else if (mazeValues[c, l] == 'A')
+        //            //{
+        //            //    //snail.OriginalCellPoint = new Point(c, l);
+        //            //}
+
+        //            ////end (jedzenie)
+        //            //else if (mazeValues[c, l] == 'B')
+        //            //{
+        //            //    //snail.OriginalCellPoint = new Point(c, l);
+        //            //}
+        //        }
+        //    }
+        //}
+
+        private void LoadMapView()
         {
-            for (var i = 0; i < _map.MapWidth; i++)
+            CreateMazeGrid();
+            int i = 0, j = 0;
+            foreach (var row in _mapBase.Map)
             {
-                for (var j = 0; j < _map.MapHeight; j++)
+                foreach (var cell in row)
                 {
-                    // przeszkody
-                    if (_map.MapDescription[i, j] == '1')
+                    if (cell == '1')
                     {
                         var glass = new Glass(i, j);
                         glass.SetValue(Grid.ColumnProperty, i);
                         glass.SetValue(Grid.RowProperty, j);
                         MapControlGrid.Children.Add(glass);
                     }
-
-                    ////start (mrowisko)
-                    //else if (mazeValues[c, l] == 'A')
-                    //{
-                    //    //snail.OriginalCellPoint = new Point(c, l);
-                    //}
-
-                    ////end (jedzenie)
-                    //else if (mazeValues[c, l] == 'B')
-                    //{
-                    //    //snail.OriginalCellPoint = new Point(c, l);
-                    //}
+                    i++;
                 }
+                i = 0;
+                j++;
             }
         }
 
@@ -68,12 +91,12 @@ namespace MapGenerator
             //MapControlGrid = new Grid();
             CellWidth = CalculateCellWidth();
 
-            for (var c = 0; c < _map.MapWidth; c++)
+            for (var c = 0; c < _mapBase.MapWidth; c++)
             {
                 MapControlGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(CellWidth) });
             }
 
-            for (var l = 0; l < _map.MapHeight; l++)
+            for (var l = 0; l < _mapBase.MapHeight; l++)
             {
                 MapControlGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(CellWidth) });
             }
@@ -81,8 +104,8 @@ namespace MapGenerator
 
         private double CalculateCellWidth()
         {
-            var height = Height / _map.MapHeight;
-            var width = Width / _map.MapWidth;
+            var height = Height / _mapBase.MapHeight;
+            var width = Width / _mapBase.MapWidth;
             return height <= width ? height : width;
         }
     }

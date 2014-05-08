@@ -27,7 +27,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid x:Name="MapViewGrid" />
-                <Grid Grid.Row="1" x:Name="MapConfigGrid"></Grid>
+                <Grid Grid.Row="1" x:Name="MapConfigGrid" />
             </Grid>
             <Grid Grid.Column="1" x:Name="ConfigGrid">
             

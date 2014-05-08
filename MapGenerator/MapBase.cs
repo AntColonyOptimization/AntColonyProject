@@ -18,153 +18,130 @@ namespace MapGenerator
 
         public int MapHeight { get; private set; }
 
-        //public double CellWidth { get; private set; }
+        private string _mapPath = @"MapSource\defMap.txt";
+        public string MapPath
+        {
+            get { return _mapPath; }
+            set 
+            {
+                if (ValidateMapPath(value))
+                {
+                    _mapPath = value;
+                    LoadMapFromFile();
+                }
+            }
+        }
 
-        //private double _mapDensity;
-
-        //List<Glass> glassList = new List<Glass>();
-        //private List<Glass> _glasses;
+        private static char _symbolStart = 'S';
+        private static char _symbolDestination = 'F';
+        private static char _symbolObstacle = 'x';
+        private static char _symbolFreeToGo = '0';
+        //private static string _mapCatalogPath = @"../../../MapGenerator/MapSource/map.txt";
 
         /// <summary>
         /// Tablica reprezentująca strukturę mapy;
         /// </summary>
-        public char [,] MapDescription;
+        private char [,] MapDescription;
 
-        //char[,] mazeValues = new char[_mazeWidth, _mazeHeight];
-        //Glass[,] mazeGlasses = new Glass[_mazeWidth, _mazeHeight];
+        public List<List<char>> Map = new List<List<char>>();
 
         #endregion
 
         #region Constructors
         public MapBase()
         {
-            //CreateMazeGrid();
-
-            LoadMaze();
-
-            //InitMaze();
+            LoadMapFromFile();
         }
 
         #endregion
 
-        private void CreateMazeGrid()
-        {
-            //for (var c = 0; c < _mazeWidth; c++)
-            //{
-            //    grdMaze.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(_cellWidth) });
-            //}
-
-            //for (var l = 0; l < _mazeHeight; l++)
-            //{
-            //    grdMaze.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(_cellWidth) });
-            //}
-        }
-
-        public void LoadMaze(string fileName = "defMap.txt")
-        {
-            //_glasses = new List<Glass>();
-            var tempMap = new List<List<char>>();
-
-            //_mazeDescription = new char[MapWidth, MapHeight];
-
-            //for (var i = 0; i < mazeGlasses.GetLength(0); i++)
-            //{
-            //    for (var j = 0; j < mazeGlasses.GetLength(1); j++)
-            //    {
-            //        mazeGlasses[i, j] = null;
-            //    }
-            //}
-
-            //for (var i = 0; i < _mazeDescription.GetLength(0); i++)
-            //{
-            //    for (var j = 0; j < _mazeDescription.GetLength(1); j++)
-            //    {
-            //        _mazeDescription[i, j] = '0';
-            //    }
-            //}
-
-            //wczytywanie z pliku
-            var filePath = string.Format(fileName);
-
-            using (var sr = new StreamReader(string.Format(@"MapSource\{0}", fileName)))
-            {
-                var l = 0;
-                while (!sr.EndOfStream)
-                {
-                    string line = sr.ReadLine();
-                    
-                    //jeżeli linijka zaczyna się od # (komentarz) to przejdź do następnej
-                    if (line == null || line.StartsWith("#"))
-                        continue;
-
-                    //jeżeli zadeklarowana gęstość siatki jest inna niż zadeklarowana 
-                    //if (line.Length != MapWidth)
-                    //    throw new NotImplementedException();
-                    tempMap.Add(line.ToList());
-                }
-            }
-
-            //CellWidth = CalculateCellWidth(tempMap);
-            MapWidth = tempMap.First().Count;
-            MapHeight = tempMap.Count;
-
-            MapDescription = new char[MapWidth, MapHeight];
-
-            int i = 0, j = 0;
-            foreach (var row in tempMap)
-            {
-                foreach (var cell in row)
-                {
-                    MapDescription[i, j] = cell;
-                    i++;
-                }
-                i = 0;
-                j++;
-            }
-
-            //mazeValues[c, l] = line[c];
-
-            
-
-            //for (var c = 0; c < mazeWidth; c++)
-            //{
-            //    for (var l = 0; l < mazeHeight; l++)
-            //    {
-            //        var topValue = ' ';
-            //        var bottomValue = ' ';
-            //        var leftValue = ' ';
-            //        var rightValue = ' ';
-
-            //        if (l > 0)
-            //            topValue = mazeValues[c, l - 1];
-            //        if (l < mazeHeight - 1)
-            //            bottomValue = mazeValues[c, l + 1];
-            //        if (c > 0)
-            //            leftValue = mazeValues[c - 1, l];
-            //        if (c < mazeWidth - 1)
-            //            rightValue = mazeValues[c + 1, l];
-
-            //        var glass = mazeGlasses[c, l];
-            //        if (glass != null)
-            //        {
-            //            glass.LeftValue = leftValue;
-            //            glass.RightValue = rightValue;
-            //            glass.TopValue = topValue;
-            //            glass.BottomValue = bottomValue;
-            //        }
-            //    }
-            //}
-        }
-
-        
-
-        //private void InitMaze()
+        //private void CreateMazeGrid()
         //{
-        //    //Storyboard sbStart = this.FindResource("sbStart") as Storyboard;
-        //    //sbStart.Begin();
+        //    //for (var c = 0; c < _mazeWidth; c++)
+        //    //{
+        //    //    grdMaze.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(_cellWidth) });
+        //    //}
 
-        //    var sbLevel = this.FindResource("sbStart") as Storyboard;
-        //    sbLevel.Begin();
+        //    //for (var l = 0; l < _mazeHeight; l++)
+        //    //{
+        //    //    grdMaze.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(_cellWidth) });
+        //    //}
         //}
+
+        //private void LoadMapFromFile()
+        //{
+        //    Map.Clear();
+
+
+        //    //wczytywanie z pliku
+        //    using (var sr = new StreamReader(_mapPath))
+        //    {
+        //        while (!sr.EndOfStream)
+        //        {
+        //            string line = sr.ReadLine();
+                    
+        //            //jeżeli linijka zaczyna się od # (komentarz) to przejdź do następnej
+        //            if (line == null || line.StartsWith("#"))
+        //                continue;
+
+        //            //jeżeli zadeklarowana gęstość siatki jest inna niż zadeklarowana 
+        //            //if (line.Length != MapWidth)
+        //            //    throw new NotImplementedException();
+        //            Map.Add(line.ToList());
+        //        }
+        //    }
+
+        //    //CellWidth = CalculateCellWidth(tempMap);
+        //    MapWidth = Map.First().Count;
+        //    MapHeight = Map.Count;
+
+        //    MapDescription = new char[MapWidth, MapHeight];
+
+        //    int i = 0, j = 0;
+        //    foreach (var row in Map)
+        //    {
+        //        foreach (var cell in row)
+        //        {
+        //            MapDescription[i, j] = cell;
+        //            i++;
+        //        }
+        //        i = 0;
+        //        j++;
+        //    }
+        //}
+
+        private void ReadMapFromFile()
+        {
+            string[] lines = System.IO.File.ReadAllLines(_mapPath);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Map.Add(new List<char>());
+                string[] line = lines[i].Split(' ');
+                MapHeight = lines.Length;
+                MapWidth = line.Length;
+                for (int j = 0; j < line.Length; j++)
+                {
+                    if ((line[0] != "#")) //to skip comment lines
+                    {
+                        Map[i].Add(char.Parse(line[j]));
+                        if (Map[i][j] == _symbolDestination)
+                        {
+                            destination = new Coordinates(j, i);
+                        }
+                        if (map[i][j] == symbolStart)
+                        {
+                            start = new Coordinates(j, i);
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool ValidateMapPath(string newPath)
+        {
+            ///TODO: dopisać walidacje ścieżki mapy
+            return true;
+        }
     }
 }
