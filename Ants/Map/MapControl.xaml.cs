@@ -24,59 +24,32 @@ namespace Ants.Map
     {
         public double CellWidth { get; private set; }
 
-        private MapInput _input;
-
-        public MapControl(MapInput input)
+        public MapControl()
         {
             InitializeComponent();
-            _input = input; 
-            LoadMapView();
         }
 
-        public void UpdateMapControl(IOutputService output)// : this()
+        private void CreateMazeGrid(Map map)
         {
-            if (_input.ShowPheromones)
-                UpdatePheromones(output.Pheromones);
-            if (_input.ShowBestPath)
-                UpdateBestPath(output.BestPath);
-            if (_input.ShowCurrentPaths)
-                UpdateCurrentPaths(output.CurrentPaths);
+            MapControlGrid.Children.Clear();
+            MapControlGrid.ColumnDefinitions.Clear();
+            MapControlGrid.RowDefinitions.Clear();
+
+            CellWidth = CalculateCellWidth(map);
+
+            for (var c = 0; c < map.Width; c++)
+            {
+                MapControlGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(CellWidth) });
+            }
+
+            for (var l = 0; l < map.Height; l++)
+            {
+                MapControlGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(CellWidth) });
+            }
         }
 
-        //private void RefreshMapView()
-        //{
-        //    for (var i = 0; i < _mapBase.MapWidth; i++)
-        //    {
-        //        for (var j = 0; j < _mapBase.MapHeight; j++)
-        //        {
-        //            // przeszkody
-        //            if (_mapBase.MapDescription[i, j] == '1')
-        //            {
-        //                var glass = new Glass(i, j);
-        //                glass.SetValue(Grid.ColumnProperty, i);
-        //                glass.SetValue(Grid.RowProperty, j);
-        //                MapControlGrid.Children.Add(glass);
-        //            }
-
-        //            ////start (mrowisko)
-        //            //else if (mazeValues[c, l] == 'A')
-        //            //{
-        //            //    //snail.OriginalCellPoint = new Point(c, l);
-        //            //}
-
-        //            ////end (jedzenie)
-        //            //else if (mazeValues[c, l] == 'B')
-        //            //{
-        //            //    //snail.OriginalCellPoint = new Point(c, l);
-        //            //}
-        //        }
-        //    }
-        //}
-
-        private void LoadMapView()
+        public void LoadMapView(Map map)
         {
-            var map = MapGenerator.Instance.GetMap();
-
             CreateMazeGrid(map);
             int i = 0, j = 0;
             foreach (var row in map.MapDescription)
@@ -96,15 +69,19 @@ namespace Ants.Map
             UserControl field;
             switch (symbol)
             {
-                case MapGenerator.SymbolObstacle:
+                case MapSymbols.SymbolObstacle:
                     field = new ObstacleControl(i, j);
                     break;
 
-                case MapGenerator.SymbolStart:
+                case MapSymbols.SymbolFreeField:
+                    field = new FreeFieldControl(i, j);
+                    break;
+
+                case MapSymbols.SymbolStart:
                     field = new StartControl(i, j);
                     break;
 
-                case MapGenerator.SymbolDestination:
+                case MapSymbols.SymbolDestination:
                     field = new DestinationControl(i, j);
                     break;
 
@@ -117,7 +94,8 @@ namespace Ants.Map
             MapControlGrid.Children.Add(field);
         }
 
-        private void UpdatePheromones(List<List<double>> pheromones)
+
+        public void UpdatePheromones(IEnumerable<List<double>> pheromones)
         {
             int i = 0, j = 0;
             foreach (var pheromonRow in pheromones)
@@ -127,7 +105,8 @@ namespace Ants.Map
                     if (pheromon > 0)
                     {
                         var rec = new Rectangle();
-                        var brush = new SolidColorBrush {Color = Color.FromScRgb((float) pheromon, 255, 0, 0)};
+                        //var brush = new SolidColorBrush { Color = Color.FromScRgb(1,255 * (float)pheromon, 0, 0) };
+                        var brush = new SolidColorBrush { Color = Color.FromScRgb((float)pheromon, 255, 0, 0) };
                         rec.Fill = brush;
                         rec.SetValue(Grid.ColumnProperty, i);
                         rec.SetValue(Grid.RowProperty, j);
@@ -140,19 +119,19 @@ namespace Ants.Map
             }
         }
 
-        private void UpdateCurrentPaths(List<List<Coordinates>> currentPaths)
+        public void UpdateCurrentPaths(IEnumerable<List<Coordinates>> currentPaths)
         {
             int i = 0, j = 0;
             foreach (var pathsRow in currentPaths)
             {
                 foreach (var path in pathsRow)
                 {
-                    var rec = new Rectangle();// {Width = path.Width, Height = path.Height};
-                    var brush = new SolidColorBrush { Color = Color.FromScRgb((float)0.7,0, 255, 255) };
-                    rec.Fill = brush;
-                    rec.SetValue(Grid.ColumnProperty, path.Width);
-                    rec.SetValue(Grid.RowProperty, path.Height);
-                    MapControlGrid.Children.Add(rec);
+                    var ellipse = new Ellipse {Width = CellWidth/3, Height = CellWidth/3};
+                    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 255) };
+                    ellipse.Fill = brush;
+                    ellipse.SetValue(Grid.ColumnProperty, path.Width);
+                    ellipse.SetValue(Grid.RowProperty, path.Height);
+                    MapControlGrid.Children.Add(ellipse);
                     i++;
                 }
                 i = 0;
@@ -160,32 +139,35 @@ namespace Ants.Map
             }
         }
 
-        private void UpdateBestPath(List<Coordinates> bestPath)
+        public void UpdateBestPath(IEnumerable<Coordinates> bestPath)
         {
+            //double x1 = 0;
+            //double y1 = 0;
             foreach (var path in bestPath)
             {
-                var rec = new Rectangle();// {Width = path.Width, Height = path.Height};
-                var brush = new SolidColorBrush { Color = Color.FromScRgb((float)0.7,0, 255, 0) };
+                var rec = new Rectangle();
+                var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
                 rec.Fill = brush;
                 rec.SetValue(Grid.ColumnProperty, path.Width);
                 rec.SetValue(Grid.RowProperty, path.Height);
                 MapControlGrid.Children.Add(rec);
-            }
-        }
 
-        private void CreateMazeGrid(Map map)
-        {
-            //MapControlGrid = new Grid();
-            CellWidth = CalculateCellWidth(map);
+                //var newLine = new Line();
 
-            for (var c = 0; c < map.Width; c++)
-            {
-                MapControlGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(CellWidth) });
-            }
+                //newLine.X1 = x1;
+                //newLine.Y1 = y1;
 
-            for (var l = 0; l < map.Height; l++)
-            {
-                MapControlGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(CellWidth) });
+                //newLine.SetValue(Grid.ColumnProperty, path.Width);
+                //newLine.SetValue(Grid.RowProperty, path.Height);
+                //newLine.X2 = path.Width*CellWidth;
+                //newLine.Y2 = path.Height*CellWidth;
+                //var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
+                //newLine.StrokeThickness = 2;
+                //newLine.Stroke = brush;
+                //MapControlGrid.Children.Add(newLine);
+
+                //x1 = newLine.X2;
+                //y1 = newLine.Y2;
             }
         }
 

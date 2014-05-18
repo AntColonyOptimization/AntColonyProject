@@ -23,6 +23,10 @@ namespace Ants.Map
 {
     public partial class MapInput : UserControl, INotifyPropertyChanged
     {
+        private readonly MapControl _mapControl;
+        private readonly MapGenerator _mapGenerator = new MapGenerator();
+        public Map Map { get; private set; }
+
         #region Fields
 
         private bool _showPheromones = true;
@@ -58,8 +62,9 @@ namespace Ants.Map
             }
         }
 
-
-
+        /// <summary>
+        /// Map Paths Combobox collection.
+        /// </summary>
         private ObservableCollection<string> _mapPaths = new ObservableCollection<string>
             {
                 @"Map\Source\map.txt",
@@ -75,27 +80,29 @@ namespace Ants.Map
             }
         }
 
-        private string _selectedMap;
-        public string SelectedMap
+        /// <summary>
+        /// Selected map path
+        /// </summary>
+        private string _selectedMapPath;
+        public string SelectedMapPath
         {
-            get { return _selectedMap; }
+            get { return _selectedMapPath; }
             set
             {
-                MapGenerator.Instance.MapPath = value;
-                _selectedMap = MapGenerator.Instance.MapPath; 
-                OnPropertyChanged("SelectedMap");
+                _selectedMapPath = value;
+                OnPropertyChanged("SelectedMapPath");
             }
         }
 
 
         #endregion
 
-        public MapInput()
+        public MapInput(MapControl mapControl)
         {
             InitializeComponent();
             MapInputGrid.DataContext = this;
-            SelectedMap = MapPaths.ElementAt(0);
-            //MapPaths = new
+            SelectedMapPath = MapPaths.ElementAt(0);
+            _mapControl = mapControl;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,9 +114,30 @@ namespace Ants.Map
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void LoadMapClick(object sender, RoutedEventArgs e)
+        public void LoadMapClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!_mapGenerator.ValidateMapPath(SelectedMapPath))
+            {
+                MessageBox.Show("Wybrana mapa nie istnieje");
+                return;
+            }
+            LoadMap();
+        }
+
+        private void LoadMap()
+        {
+            Map = _mapGenerator.ReadMapFromFile(SelectedMapPath);
+            _mapControl.LoadMapView(Map);
+        }
+
+        public void UpdateMap(IOutputService output)
+        {
+            if (ShowPheromones)
+                _mapControl.UpdatePheromones(output.Pheromones);
+            if (ShowBestPath)
+                _mapControl.UpdateBestPath(output.BestPath);
+            if (ShowCurrentPaths)
+                _mapControl.UpdateCurrentPaths(output.CurrentPaths);
         }
     }
 }

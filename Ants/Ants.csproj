@@ -74,6 +74,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Map\Controls\FreeFieldControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Map\Controls\StartControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +99,9 @@
     <Compile Include="Map\Controls\DestinationControl.xaml.cs">
       <DependentUpon>DestinationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Map\Controls\FreeFieldControl.xaml.cs">
+      <DependentUpon>FreeFieldControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Map\Controls\StartControl.xaml.cs">
       <DependentUpon>StartControl.xaml</DependentUpon>
     </Compile>
@@ -109,6 +116,7 @@
       <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Map\MapGenerator.cs" />
+    <Compile Include="Map\MapSymbols.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

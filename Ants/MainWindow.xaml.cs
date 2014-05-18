@@ -16,12 +16,17 @@ namespace Ants
         private IAlgorithm _algorithm;
         private IInputService _input;
 
-        private MapControl _mapControl;// = new MapControl();
-        private MapInput _mapInput = new MapInput();
         private InputView _inputView = new InputView();
+
+        
+        private MapControl _mapControl;
+
+        private readonly MapInput _mapInput;
 
         public MainWindow()
         {
+            _mapControl = new MapControl();
+            _mapInput = new MapInput(_mapControl);
             InitializeComponent();
 
             _inputView.RunAlgorithm += RunAlgorithm;
@@ -35,7 +40,6 @@ namespace Ants
             //sbLevel.Begin();
             MapConfigGrid.Children.Add(_mapInput);
 
-            _mapControl = new MapControl(_mapInput);
             MapViewGrid.Children.Add(_mapControl);
             MapViewGrid.Width = _mapControl.Width;
             
@@ -45,10 +49,15 @@ namespace Ants
 
         private async void RunAlgorithm(IInputService input)
         {
+            if (_mapInput.Map == null)
+            {
+                MessageBox.Show("Nie wczytano mapy.");
+                return;
+            }
             if (_input == null || _algorithm == null || _input != input)
             {
                 _input = input;
-                _algorithm = new Algorithm(input);
+                _algorithm = new Algorithm(input, _mapInput.Map);
             }
 
             IOutputService output;
@@ -58,31 +67,39 @@ namespace Ants
                 UpdateState(output);
                 await Task.Delay(_delay);
             }
+            //ustawiane na nulla, żeby przy kolejnym uruchomieniu pełnego algorytmu podał nowe dane z interfejsu w konstruktorze
+            _algorithm = null;
         }
 
         private void StepAlgorithm(IInputService input)
         {
+            if (_mapInput.Map == null)
+            {
+                MessageBox.Show("Nie wczytano mapy.");
+                return;
+            }
             if (input == null || _algorithm == null || _input != input)
             {
                 _input = input;
-                _algorithm = new Algorithm(input);
+                _algorithm = new Algorithm(input, _mapInput.Map);
             }
 
             IOutputService output;
-            if(!_algorithm.IsFinished())
+            if (!_algorithm.IsFinished())
             {
                 output = _algorithm.Execute();
                 UpdateState(output);
+            }
+            else
+            {
+                //ustawiane na nulla po pełnym przejściu algorytmu, żeby przy kolejnym uruchomieniu algorytmu podał nowe dane z interfejsu w konstruktorze
+                _algorithm = null;
             }
         }
 
         private void UpdateState(IOutputService output)
         {
-            _mapControl = new MapControl(_mapInput);
-            _mapControl.UpdateMapControl(output);
-            //_mapControl.UpdatePheromones(output.Pheromones);
-            //_mapControl.LoadMapView();
-            MapViewGrid.Children.Add(_mapControl);
+            _mapInput.UpdateMap(output);
         }
     }
 }

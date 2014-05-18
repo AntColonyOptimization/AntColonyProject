@@ -15,28 +15,30 @@ namespace Ants
         //private int height;
         //private int width;
 
-        private double alpha;
-        private double beta;
-        private double rho;
-        private double Q;
-        private double pheromoneInit;
-        private int numAnts;
-        private int numIter;
+        private readonly double alpha;
+        private readonly double beta;
+        private readonly double rho;
+        private readonly double Q;
+        private readonly double pheromoneInit;
+        private readonly int numAnts;
+        private readonly int numIter;
         private int bestLength;
         private bool isFinished;
 
         private List<Coordinates> bestPath;
-        private Random random = new Random();
+        private readonly Random random = new Random();
         private int mainIterator;
 
-        private List<List<double>> distances = new List<List<double>>();
-        private List<List<double>> pheromones = new List<List<double>>();
+        private readonly List<List<double>> distances = new List<List<double>>();
+        private readonly List<List<double>> pheromones = new List<List<double>>();
         private List<List<int>> numOfVisits = new List<List<int>>();
-        private int[,] numbersOfVisits = new int[1000, 1000];
+        private readonly int[,] numbersOfVisits = new int[1000, 1000];
         private int currentAnt;
-        private List<List<Coordinates>> path = new List<List<Coordinates>>();
+        private readonly List<List<Coordinates>> path = new List<List<Coordinates>>();
 
-        private IOutputService _outputService;
+        private readonly IOutputService _outputService;
+
+        private readonly Map.Map _map;
 
         public List<List<double>> Pheromones
         {
@@ -55,8 +57,9 @@ namespace Ants
             set { }
         }
 
-        public Algorithm(IInputService input)
+        public Algorithm(IInputService input, Map.Map map)
         {
+            _map = map;
             alpha = input.Alpha;
             beta = input.Beta;
             rho = input.Rho;
@@ -83,12 +86,11 @@ namespace Ants
         {
             if(mainIterator < numIter)
             {
-                var map = Map.MapGenerator.Instance.GetMap();
                 for (currentAnt = 0; currentAnt < numAnts; currentAnt++)
                 {
-                    BuildPath(map);
+                    BuildPath(_map);
                 }
-                updatePheromones(map);//pheromones are updated after all the ants in one operation found path
+                updatePheromones(_map);//pheromones are updated after all the ants in one operation found path
                 mainIterator++;
 
                 _outputService.Pheromones = pheromones;
@@ -129,17 +131,16 @@ namespace Ants
         {
             int tempWidth;
             int tempHeight;
-            var map = Map.MapGenerator.Instance.GetMap();
-            for (int i = 0; i < map.Height; i++)
+            for (int i = 0; i < _map.Height; i++)
             {
                 distances.Add(new List<double>());
                 pheromones.Add(new List<double>());
-                for (int j = 0; j < map.Width; j++)
+                for (int j = 0; j < _map.Width; j++)
                 {
-                    if (map.MapDescription[i][j] != Map.MapGenerator.SymbolObstacle)
+                    if (_map.MapDescription[i][j] != MapSymbols.SymbolObstacle)
                     {
-                        tempWidth = (map.Destination.Width - j) * (map.Destination.Width - j);
-                        tempHeight = (map.Destination.Height - i) * (map.Destination.Height - i);
+                        tempWidth = (_map.Destination.Width - j) * (_map.Destination.Width - j);
+                        tempHeight = (_map.Destination.Height - i) * (_map.Destination.Height - i);
                         distances[i].Add(Math.Sqrt(tempWidth + tempHeight));
                         pheromones[i].Add(pheromoneInit);
                     }
@@ -154,21 +155,21 @@ namespace Ants
 
         private double[,] CalculateProbabilities(Coordinates currentPos)
         {
-            var map = Map.MapGenerator.Instance.GetMap();
+            //var map = Map.MapGenerator.Instance.GetMap();
             double[,] taueta = new double[3, 3];
             double sum = 0.0;
             int setValue = 0;
             int minHeight = (currentPos.Height - 1 < 0) ? 0 : currentPos.Height - 1;
             int minWidth = (currentPos.Width - 1 < 0) ? 0 : currentPos.Width - 1;
-            int maxHeight = (currentPos.Height + 2 >= map.Height) ? map.Height : currentPos.Height + 2;
-            int maxWidth = (currentPos.Width + 2 >= map.Width) ? map.Width : currentPos.Width + 2;
+            int maxHeight = (currentPos.Height + 2 >= _map.Height) ? _map.Height : currentPos.Height + 2;
+            int maxWidth = (currentPos.Width + 2 >= _map.Width) ? _map.Width : currentPos.Width + 2;
             while (sum == 0)
             {
                 for (int i = minHeight; i < maxHeight; i++)
                 {
                     for (int j = minWidth; j < maxWidth; j++)
                     {
-                        if (map.MapDescription[i][j] != Map.MapGenerator.SymbolObstacle)
+                        if (_map.MapDescription[i][j] != MapSymbols.SymbolObstacle)
                         {
                             if (i == currentPos.Height && j == currentPos.Width)
                             {

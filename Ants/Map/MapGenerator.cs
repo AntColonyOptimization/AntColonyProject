@@ -9,35 +9,29 @@ namespace Ants.Map
 {
     public class MapGenerator
     {
-        public const char SymbolStart = 'S';
-        public const char SymbolDestination = 'F';
-        public const char SymbolObstacle = 'x';
-        //private static char _symbolFreeToGo = '0';
-        //private static string mapCatalogPath = @"../../../MapGenerator/MapSource/map.txt";
+        
+        //public string MapPath
+        //{
+        //    get { return _mapPath; }
+        //    set 
+        //    {
+        //        if (ValidateMapPath(value))
+        //        {
+        //            _mapPath = value;
+        //            _map = new Map();
+        //            ReadMapFromFile();
+        //        }
+        //    }
+        //}
 
-        private string _mapPath = @"Map\Source\map.txt";
-        public string MapPath
-        {
-            get { return _mapPath; }
-            set 
-            {
-                if (ValidateMapPath(value))
-                {
-                    _mapPath = value;
-                    _map = new Map();
-                    ReadMapFromFile();
-                }
-            }
-        }
-
-        private Map _map;
+        //private Map _map;
         //private char [,] MapDescription;
 
         //public List<List<char>> Map = new List<List<char>>();
 
         private static MapGenerator _instance;
 
-        private MapGenerator() { }
+        public MapGenerator() { }
 
         public static MapGenerator Instance
         {
@@ -51,44 +45,48 @@ namespace Ants.Map
             }
         }
 
-        private void ReadMapFromFile()
+        public Map ReadMapFromFile(string path)
         {
-            string[] lines = System.IO.File.ReadAllLines(MapPath);
+            string[] lines = System.IO.File.ReadAllLines(path);
+            var map = new Map();
 
             for (int i = 0; i < lines.Length; i++)
             {
-                _map.MapDescription.Add(new List<char>());
+                map.MapDescription.Add(new List<char>());
+                //zamiana kilkukrotnych spacji na pojedyńcze (jak się komuś wpisze za dużo przypadkiem)
+                lines[i] = System.Text.RegularExpressions.Regex.Replace(lines[i], @"\s+", " ");
                 string[] line = lines[i].Split(' ');
-                _map.Height = lines.Length;
-                _map.Width = line.Length;
+                map.Height = lines.Length;
+                map.Width = line.Length;
                 for (int j = 0; j < line.Length; j++)
                 {
                     if ((line[0] != "#")) //to skip comment lines
                     {
-                        _map.MapDescription[i].Add(char.Parse(line[j]));
-                        if (_map.MapDescription[i][j] == SymbolDestination)
+                        map.MapDescription[i].Add(char.Parse(line[j]));
+                        if (map.MapDescription[i][j] == MapSymbols.SymbolDestination)
                         {
-                            _map.Destination = new Coordinates(j, i);
+                            map.Destination = new Coordinates(j, i);
                         }
-                        if (_map.MapDescription[i][j] == SymbolStart)
+                        if (map.MapDescription[i][j] == MapSymbols.SymbolStart)
                         {
-                            _map.Start = new Coordinates(j, i);
+                            map.Start = new Coordinates(j, i);
                         }
                     }
                 }
             }
+            return map;
         }
 
-        public Map GetMap()
-        {
-            if (_map != null)
-                return _map;
+        //public Map GetMap()
+        //{
+        //    if (_map != null)
+        //        return _map;
 
-            _map = new Map();
-            ReadMapFromFile();
+        //    _map = new Map();
+        //    ReadMapFromFile();
 
-            return _map;
-        }
+        //    return _map;
+        //}
 
         //private void LoadMapFromFile()
         //{
@@ -132,7 +130,7 @@ namespace Ants.Map
         //    }
         //}
 
-        private bool ValidateMapPath(string newPath)
+        public bool ValidateMapPath(string newPath)
         {
             return File.Exists(newPath);
         }

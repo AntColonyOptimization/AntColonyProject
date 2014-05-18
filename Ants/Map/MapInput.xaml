@@ -30,7 +30,7 @@
             <StackPanel>
                 <ComboBox ItemsSource="{Binding Path=MapPaths}" 
                           IsEditable="True" 
-                          Text="{Binding Path=SelectedMap}"/>
+                          Text="{Binding Path=SelectedMapPath}"/>
                 <Button Content="Wczytaj mape"
                         Click="LoadMapClick"/>
             </StackPanel>
