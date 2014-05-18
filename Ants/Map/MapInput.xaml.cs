@@ -94,7 +94,6 @@ namespace Ants.Map
             }
         }
 
-
         #endregion
 
         public MapInput(MapControl mapControl)
@@ -132,12 +131,13 @@ namespace Ants.Map
 
         public void UpdateMap(IOutputService output)
         {
+            _mapControl.LoadMapView(Map);
             if (ShowPheromones)
                 _mapControl.UpdatePheromones(output.Pheromones);
-            if (ShowBestPath)
-                _mapControl.UpdateBestPath(output.BestPath);
             if (ShowCurrentPaths)
                 _mapControl.UpdateCurrentPaths(output.CurrentPaths);
+            if (ShowBestPath)
+                _mapControl.UpdateBestPath(output.BestPath);
         }
     }
 }

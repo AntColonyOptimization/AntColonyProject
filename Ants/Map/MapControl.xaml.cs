@@ -121,55 +121,120 @@ namespace Ants.Map
 
         public void UpdateCurrentPaths(IEnumerable<List<Coordinates>> currentPaths)
         {
-            int i = 0, j = 0;
+            //int i = 0, j = 0;
+            //var c = 1;
             foreach (var pathsRow in currentPaths)
             {
-                foreach (var path in pathsRow)
-                {
-                    var ellipse = new Ellipse {Width = CellWidth/3, Height = CellWidth/3};
-                    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 255) };
-                    ellipse.Fill = brush;
-                    ellipse.SetValue(Grid.ColumnProperty, path.Width);
-                    ellipse.SetValue(Grid.RowProperty, path.Height);
-                    MapControlGrid.Children.Add(ellipse);
-                    i++;
-                }
-                i = 0;
-                j++;
+                DrawLine(pathsRow, Color.FromScRgb(1, 0, 255, 255));
+                //c++;
+                //foreach (var path in pathsRow)
+                //{
+                //    var ellipse = new Ellipse {Width = CellWidth/3, Height = CellWidth/3};
+                //    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 255) };
+                //    ellipse.Fill = brush;
+                //    ellipse.SetValue(Grid.ColumnProperty, path.Width);
+                //    ellipse.SetValue(Grid.RowProperty, path.Height);
+                //    MapControlGrid.Children.Add(ellipse);
+                //    i++;
+                //}
+                //i = 0;
+                //j++;
             }
         }
 
         public void UpdateBestPath(IEnumerable<Coordinates> bestPath)
         {
-            //double x1 = 0;
-            //double y1 = 0;
-            foreach (var path in bestPath)
+            DrawLine(bestPath, Color.FromScRgb(1, 0, 255, 0));
+            ////double x1 = 0;
+            ////double y1 = 0;
+            //var lastCoordinates = new Coordinates(0,0);
+            //foreach (var path in bestPath)
+            //{
+            //    var rec = new Rectangle();
+            //    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
+            //    rec.Fill = brush;
+            //    rec.SetValue(Grid.ColumnProperty, path.Width);
+            //    rec.SetValue(Grid.RowProperty, path.Height);
+            //    MapControlGrid.Children.Add(rec);
+
+            //    //var newLine = new Line();
+
+            //    //newLine.X1 = x1;
+            //    //newLine.Y1 = y1;
+
+            //    //newLine.SetValue(Grid.ColumnProperty, path.Width);
+            //    //newLine.SetValue(Grid.RowProperty, path.Height);
+            //    //newLine.X2 = path.Width*CellWidth;
+            //    //newLine.Y2 = path.Height*CellWidth;
+            //    //var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
+            //    //newLine.StrokeThickness = 2;
+            //    //newLine.Stroke = brush;
+            //    //MapControlGrid.Children.Add(newLine);
+
+            //    //x1 = newLine.X2;
+            //    //y1 = newLine.Y2;
+            //}
+        }
+
+        private void DrawLine(IEnumerable<Coordinates> coordinateses, Color color)
+        {
+            var path = coordinateses as Coordinates[] ?? coordinateses.ToArray();
+            for (int i = 0; i < path.Count(); i++)
             {
-                var rec = new Rectangle();
-                var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
-                rec.Fill = brush;
-                rec.SetValue(Grid.ColumnProperty, path.Width);
-                rec.SetValue(Grid.RowProperty, path.Height);
-                MapControlGrid.Children.Add(rec);
+                var line = new Line();
+                if (i == 0)
+                {
+                    line.X1 = CellWidth/2;
+                    line.Y1 = CellWidth/2;
+                }
+                else
+                {
+                    if (path[i - 1].Height < path[i].Height)
+                        line.Y1 = 0;
+                    else if (path[i - 1].Height == path[i].Height)
+                        line.Y1 = CellWidth/2;
+                    else if (path[i - 1].Height > path[i].Height)
+                        line.Y1 = CellWidth;
 
-                //var newLine = new Line();
+                    if (path[i - 1].Width < path[i].Width)
+                        line.X1 = 0;
+                    else if (path[i - 1].Width == path[i].Width)
+                        line.X1 = CellWidth / 2;
+                    else if (path[i - 1].Width > path[i].Width)
+                        line.X1 = CellWidth;
 
-                //newLine.X1 = x1;
-                //newLine.Y1 = y1;
+                }
+                if (i < path.Count()-1)
+                {
+                    if (path[i + 1].Height < path[i].Height)
+                        line.Y2 = 0;
+                    else if (path[i + 1].Height == path[i].Height)
+                        line.Y2 = CellWidth / 2;
+                    else if (path[i + 1].Height > path[i].Height)
+                        line.Y2 = CellWidth;
 
-                //newLine.SetValue(Grid.ColumnProperty, path.Width);
-                //newLine.SetValue(Grid.RowProperty, path.Height);
-                //newLine.X2 = path.Width*CellWidth;
-                //newLine.Y2 = path.Height*CellWidth;
-                //var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
-                //newLine.StrokeThickness = 2;
-                //newLine.Stroke = brush;
-                //MapControlGrid.Children.Add(newLine);
-
-                //x1 = newLine.X2;
-                //y1 = newLine.Y2;
+                    if (path[i + 1].Width < path[i].Width)
+                        line.X2 = 0;
+                    else if (path[i + 1].Width == path[i].Width)
+                        line.X2 = CellWidth / 2;
+                    else if (path[i + 1].Width > path[i].Width)
+                        line.X2 = CellWidth;
+                }
+                else
+                {
+                    line.X2 = CellWidth / 2;
+                    line.Y2 = CellWidth / 2;
+                }
+                line.SetValue(Grid.ColumnProperty, path[i].Width);
+                line.SetValue(Grid.RowProperty, path[i].Height);
+                var brush = new SolidColorBrush { Color = color };
+                line.StrokeThickness = 2;
+                line.Stroke = brush;
+                MapControlGrid.Children.Add(line);
             }
         }
+
+        //private void Calculat
 
         private double CalculateCellWidth(Map map)
         {
