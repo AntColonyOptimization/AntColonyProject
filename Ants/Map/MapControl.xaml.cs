@@ -98,6 +98,11 @@ namespace Ants.Map
         public void UpdatePheromones(IEnumerable<List<double>> pheromones)
         {
             int i = 0, j = 0;
+            double max = 0;
+            foreach (var pheromonRow in pheromones)
+            {
+                max = (pheromonRow.Max() > max) ? pheromonRow.Max() : max;
+            }
             foreach (var pheromonRow in pheromones)
             {
                 foreach (var pheromon in pheromonRow)
@@ -106,7 +111,7 @@ namespace Ants.Map
                     {
                         var rec = new Rectangle();
                         //var brush = new SolidColorBrush { Color = Color.FromScRgb(1,255 * (float)pheromon, 0, 0) };
-                        var brush = new SolidColorBrush { Color = Color.FromScRgb((float)pheromon, 255, 0, 0) };
+                        var brush = new SolidColorBrush { Color = Color.FromScRgb((float)(pheromon/max), 255, 0, 0) };
                         rec.Fill = brush;
                         rec.SetValue(Grid.ColumnProperty, i);
                         rec.SetValue(Grid.RowProperty, j);

@@ -65,11 +65,11 @@ namespace Ants.Map
                         map.MapDescription[i].Add(char.Parse(line[j]));
                         if (map.MapDescription[i][j] == MapSymbols.SymbolDestination)
                         {
-                            map.Destination = new Coordinates(j, i);
+                            map.Destination = new Coordinates(i, j);
                         }
                         if (map.MapDescription[i][j] == MapSymbols.SymbolStart)
                         {
-                            map.Start = new Coordinates(j, i);
+                            map.Start = new Coordinates(i, j);
                         }
                     }
                 }

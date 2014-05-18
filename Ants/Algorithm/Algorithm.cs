@@ -76,7 +76,6 @@ namespace Ants
             {
                 path.Add(new List<Coordinates>());
             }
-            //ReadMapFromFile();
             CalculateDistances();
 
             _outputService = new OutputService();
@@ -126,6 +125,7 @@ namespace Ants
                 }
             }
         }
+
 
         private void CalculateDistances()
         {
@@ -254,6 +254,7 @@ namespace Ants
 
                 numbersOfVisits[next.Height, next.Width]++;
             }
+            //path[currentAnt].Add(map.Destination);
             if (path[currentAnt].Count < bestLength)
             {
                 bestLength = path[currentAnt].Count;

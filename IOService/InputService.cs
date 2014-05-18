@@ -189,9 +189,9 @@
         public InputService()
         {
             Alpha = 3.0;
-            Beta = 10.0;
+            Beta = 3.0;
             Rho = 0.01;
-            Q = 50.0;
+            Q = 5.0;
             NumberOfIterations = 100;
             NumberOfAnts = 3;
 
