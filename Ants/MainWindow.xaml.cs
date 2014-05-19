@@ -83,14 +83,17 @@ namespace Ants
                 _input = input;
                 _algorithm = new Algorithm(input, _mapInput.Map);
             }
-
-            IOutputService output;
-            if (!_algorithm.IsFinished())
+            int stepsCounter = 0;
+            IOutputService output = new OutputService();
+            while (!_algorithm.IsFinished() && stepsCounter < _mapInput.NumOfSteps)
             {
                 output = _algorithm.Execute();
-                UpdateState(output);
+                stepsCounter++;
             }
-            else
+
+            UpdateState(output);
+
+            if (_algorithm.IsFinished())
             {
                 //ustawiane na nulla po pełnym przejściu algorytmu, żeby przy kolejnym uruchomieniu algorytmu podał nowe dane z interfejsu w konstruktorze
                 _algorithm = null;

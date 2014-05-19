@@ -14,6 +14,6 @@
         bool CheckBox3 { get; set; }
         bool CheckBox4 { get; set; }
         bool CheckBox5 { get; set; }
-        bool CheckBox6{ get; set; }
+        bool DeleteLoops{ get; set; }
     }
 }

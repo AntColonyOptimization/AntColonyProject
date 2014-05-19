@@ -62,6 +62,28 @@ namespace Ants.Map
             }
         }
 
+        private int _numOfSteps = 1;
+        public int NumOfSteps
+        {
+            get { return _numOfSteps; }
+            set
+            {
+                _numOfSteps = value;
+                OnPropertyChanged("NumOfSteps");
+            }
+        }
+
+        private int _currentIteration = 0;
+        public int CurrentIteration
+        {
+            get { return _currentIteration; }
+            set
+            {
+                _currentIteration = value;
+                OnPropertyChanged("CurrentIteration");
+            }
+        }
+
         /// <summary>
         /// Map Paths Combobox collection.
         /// </summary>
@@ -138,6 +160,7 @@ namespace Ants.Map
                 _mapControl.UpdateCurrentPaths(output.CurrentPaths);
             if (ShowBestPath)
                 _mapControl.UpdateBestPath(output.BestPath);
+            CurrentIteration = output.CurrentIteration;
         }
     }
 }

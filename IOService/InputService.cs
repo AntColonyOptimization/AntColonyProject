@@ -170,18 +170,18 @@
             }
         }
 
-        private bool _checkBox6;
+        private bool _deleteLoops;
 
-        public bool CheckBox6
+        public bool DeleteLoops
         {
             get
             {
-                return _checkBox6;
+                return _deleteLoops;
             }
             set
             {
-                _checkBox6 = value;
-                NotifyPropertyChanged("CheckBox6");
+                _deleteLoops = value;
+                NotifyPropertyChanged("DeleteLoops");
             }
         }
 
@@ -190,17 +190,17 @@
         {
             Alpha = 3.0;
             Beta = 3.0;
-            Rho = 0.01;
+            Rho = 0.1;
             Q = 5.0;
             NumberOfIterations = 100;
             NumberOfAnts = 3;
 
-            CheckBox1 = true;
-            CheckBox2 = true;
-            CheckBox3 = true;
-            CheckBox4 = true;
-            CheckBox5 = true;
-            CheckBox6 = true;
+            CheckBox1 = false;
+            CheckBox2 = false;
+            CheckBox3 = false;
+            CheckBox4 = false;
+            CheckBox5 = false;
+            DeleteLoops = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

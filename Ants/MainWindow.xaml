@@ -26,10 +26,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid x:Name="MapViewGrid" />
-                <Grid Grid.Row="1" x:Name="MapConfigGrid" />
+                <Grid x:Name="MapViewGrid" Margin="0,0,-140,0" />
+                <Grid Grid.Row="1" x:Name="MapConfigGrid" Margin="0,0,-170,0" />
             </Grid>
-            <Grid Grid.Column="1" x:Name="ConfigGrid">
+            <Grid Grid.Column="1" x:Name="ConfigGrid" Margin="170,0,0,0">
             
             </Grid>
 

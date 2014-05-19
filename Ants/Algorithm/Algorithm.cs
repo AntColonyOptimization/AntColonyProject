@@ -14,6 +14,7 @@ namespace Ants
     {
         //private int height;
         //private int width;
+        private readonly bool flagDeleteLoops;
 
         private readonly double alpha;
         private readonly double beta;
@@ -68,10 +69,10 @@ namespace Ants
             numIter = input.NumberOfIterations;
             numAnts = input.NumberOfAnts;
             currentAnt = 0;
-            mainIterator = 0;
             bestLength = 99999999;
             mainIterator = 0;
             isFinished = false;
+            flagDeleteLoops = input.DeleteLoops;
             for (int i = 0; i < numAnts; i++)
             {
                 path.Add(new List<Coordinates>());
@@ -95,6 +96,7 @@ namespace Ants
                 _outputService.Pheromones = pheromones;
                 _outputService.CurrentPaths = path;
                 _outputService.BestPath = bestPath;
+                _outputService.CurrentIteration = mainIterator;
 
                 return _outputService;
             }
@@ -254,11 +256,44 @@ namespace Ants
 
                 numbersOfVisits[next.Height, next.Width]++;
             }
-            //path[currentAnt].Add(map.Destination);
+            
+            if(flagDeleteLoops)
+            {
+                if(checkIfLoops())
+                {
+                    deleteLoops();
+                }
+            }
+
             if (path[currentAnt].Count < bestLength)
             {
                 bestLength = path[currentAnt].Count;
                 bestPath = path[currentAnt];
+            }
+        }
+
+        private bool checkIfLoops()
+        {
+            return path[currentAnt].Distinct().Count()==path[currentAnt].Count();
+        }
+
+        private void deleteLoops()
+        {
+            int indexFirst = 0;
+            int indexLast = 0;
+            int i = 0;
+            while (i < path[currentAnt].Count())
+            {
+                indexFirst = path[currentAnt].IndexOf(path[currentAnt][i]);
+                indexLast = path[currentAnt].LastIndexOf(path[currentAnt][i]);
+                if (indexFirst != indexLast)
+                {
+                    path[currentAnt].RemoveRange(indexFirst, indexLast - indexFirst);
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
 

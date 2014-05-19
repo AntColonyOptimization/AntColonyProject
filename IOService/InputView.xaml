@@ -5,15 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" Height="450" Width="200">
-    <Canvas x:Name="canvas">
+    <Canvas x:Name="canvas" Margin="0,0,0,-27">
         <Canvas.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Offset="1.0" Color="#001932"/>
             </LinearGradientBrush>
         </Canvas.Background>
-        <Button Content="Uruchom algorytm" Canvas.Left="40" Canvas.Top="420" Width="150" Click="Button_Click"/>
+        <Button Content="Uruchom algorytm" Canvas.Left="26" Canvas.Top="445" Width="150" Click="Button_Click"/>
 
-        <Button Content="Symulacja krokowa" Canvas.Left="40" Canvas.Top="395" Width="150" Click="Button_Click_1"/>
+        <Button Content="Symulacja krokowa" Canvas.Left="26" Canvas.Top="418" Width="150" Click="Button_Click_1"/>
 
         <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="400" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
             <Grid.RowDefinitions>
@@ -47,7 +47,6 @@
             <Label Content="Checkbox3" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Checkbox4" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Checkbox5" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Checkbox6" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
 
             <TextBox Grid.Column="1" Grid.Row="0" Width="75" Text="{Binding Path=Alpha}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="1" Width="75" Text="{Binding Path=Beta}" VerticalAlignment="Center"/>
@@ -61,7 +60,7 @@
             <CheckBox Grid.Column="1" Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox3" Foreground="White" IsChecked="{Binding Path=CheckBox3}"/>
             <CheckBox Grid.Column="1" Grid.Row="9" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox4" Foreground="White" IsChecked="{Binding Path=CheckBox4}"/>
             <CheckBox Grid.Column="1" Grid.Row="10" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox5" Foreground="White" IsChecked="{Binding Path=CheckBox5}"/>
-            <CheckBox Grid.Column="1" Grid.Row="11" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox6" Foreground="White" IsChecked="{Binding Path=CheckBox6}"/>
+            <CheckBox Grid.Row="11" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="14,9,1,8"/>
 
         </Grid>
 
