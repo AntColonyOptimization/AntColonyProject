@@ -45,9 +45,9 @@
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Wyświetl" Margin="0,10,19,10" Grid.RowSpan="3">
             <StackPanel>
-                <CheckBox Content="Feromony" Background="#FFFF0202" IsChecked="{Binding Path=ShowPheromones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Content="Chwilowa ścieżka" Background="Cyan" IsChecked="{Binding Path=ShowCurrentPaths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Content="Najlepsza ścieżka" Background="Lime" IsChecked="{Binding Path=ShowBestPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Content="Feromony" Background="#FFFF0202" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowPheromones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Content="Chwilowa ścieżka" Background="Cyan"  Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowCurrentPaths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Content="Najlepsza ścieżka" Background="Lime" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowBestPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Symulacja krokowa" Margin="151,10,0,10" Grid.ColumnSpan="2" Grid.RowSpan="3">

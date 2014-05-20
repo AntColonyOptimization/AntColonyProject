@@ -11,6 +11,7 @@
 
         public event RunAlgorithmEventHandler RunAlgorithm;
         public event RunAlgorithmEventHandler StepAlgorithm;
+        public event RunAlgorithmEventHandler ResetAlgorithm;
 
         public InputView()
         {
@@ -28,11 +29,20 @@
             }
         }
 
+
         private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
         {
             if(StepAlgorithm != null)
             {
                 StepAlgorithm(Input);
+            }
+        }
+
+        private void Button_Click_2(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (ResetAlgorithm != null)
+            {
+                ResetAlgorithm(Input);
             }
         }
     }

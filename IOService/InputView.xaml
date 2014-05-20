@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200" Height="450" Width="200">
-    <Canvas x:Name="canvas" Margin="0,0,0,-27">
+    <Canvas x:Name="canvas" Margin="0,0,0,-50">
         <Canvas.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Offset="1.0" Color="#001932"/>
@@ -63,6 +63,7 @@
             <CheckBox Grid.Row="11" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="14,9,1,8"/>
 
         </Grid>
+        <Button Content="Reset" Canvas.Left="26" Canvas.Top="472" Width="150" Click="Button_Click_2" RenderTransformOrigin="0.453,2.091"/>
 
     </Canvas>
 </UserControl>

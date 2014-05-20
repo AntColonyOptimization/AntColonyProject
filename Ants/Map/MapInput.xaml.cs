@@ -116,6 +116,20 @@ namespace Ants.Map
             }
         }
 
+        /// <summary>
+        /// holds all the data from current iteration
+        /// </summary>
+        private IOutputService _currentState;
+        public IOutputService CurrentState
+        {
+            get { return _currentState; }
+            set
+            {
+                _currentState = value;
+                OnPropertyChanged("SelectedMapPath");
+            }
+        }
+
         #endregion
 
         public MapInput(MapControl mapControl)
@@ -133,6 +147,7 @@ namespace Ants.Map
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+
         }
 
         public void LoadMapClick(object sender, RoutedEventArgs e)
@@ -145,22 +160,44 @@ namespace Ants.Map
             LoadMap();
         }
 
+
         private void LoadMap()
         {
             Map = _mapGenerator.ReadMapFromFile(SelectedMapPath);
             _mapControl.LoadMapView(Map);
         }
 
+
         public void UpdateMap(IOutputService output)
         {
-            _mapControl.LoadMapView(Map);
-            if (ShowPheromones)
-                _mapControl.UpdatePheromones(output.Pheromones);
-            if (ShowCurrentPaths)
-                _mapControl.UpdateCurrentPaths(output.CurrentPaths);
-            if (ShowBestPath)
-                _mapControl.UpdateBestPath(output.BestPath);
-            CurrentIteration = output.CurrentIteration;
+            if (output != null)
+            {
+                CurrentState = output;
+
+                _mapControl.LoadMapView(Map);
+                if (ShowPheromones)
+                    _mapControl.UpdatePheromones(output.Pheromones);
+                if (ShowCurrentPaths)
+                    _mapControl.UpdateCurrentPaths(output.CurrentPaths);
+                if (ShowBestPath)
+                    _mapControl.UpdateBestPath(output.BestPath);
+                CurrentIteration = output.CurrentIteration;
+            }
         }
+
+        private void CheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            UpdateMap(CurrentState);
+        }
+
+        internal void Reset()
+        {
+            _mapControl.LoadMapView(Map);
+
+            NumOfSteps = 1;
+            CurrentIteration = 0;
+
+        }
+
     }
 }

@@ -31,7 +31,7 @@ namespace Ants
 
             _inputView.RunAlgorithm += RunAlgorithm;
             _inputView.StepAlgorithm += StepAlgorithm;
-
+            _inputView.ResetAlgorithm += ResetAlgorithm;
 
             //Algorithm a = new Algorithm();
             //a.Execute();
@@ -98,6 +98,19 @@ namespace Ants
                 //ustawiane na nulla po pełnym przejściu algorytmu, żeby przy kolejnym uruchomieniu algorytmu podał nowe dane z interfejsu w konstruktorze
                 _algorithm = null;
             }
+        }
+
+
+        private void ResetAlgorithm(IInputService input)
+        {
+            if (_mapInput.Map == null)
+            {
+                MessageBox.Show("Nie wczytano mapy.");
+                return;
+            }
+            _input = input;
+            _algorithm = new Algorithm(input, _mapInput.Map);
+            _mapInput.Reset();
         }
 
         private void UpdateState(IOutputService output)
