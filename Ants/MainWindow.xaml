@@ -18,15 +18,22 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="MapGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <TabControl BorderThickness="1" BorderBrush="White"  Background="#FF001020" Width="Auto" Margin="10,0,-140,10">
+                <TabItem Header="Mapa" Foreground="Blue" Background="#FF001020" Width="Auto">
+                    
+                    <Grid x:Name="MapGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                <Grid x:Name="MapViewGrid" Margin="0,0,-140,0" />
-                <Grid Grid.Row="1" x:Name="MapConfigGrid" Margin="-81,0,-170,0" />
-            </Grid>
+                        <Grid x:Name="MapViewGrid" />
+                        <Grid Grid.Row="1" x:Name="MapConfigGrid" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Dane techniczne" Foreground="Blue"  Background="#FF001020"></TabItem >
+                <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020"></TabItem>
+            </TabControl>
             <Grid Grid.Column="1" x:Name="ConfigGrid" Margin="170,-96,0,0">
             
             </Grid>
