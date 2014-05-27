@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ants.Annotations;
 using Ants.Map.Controls;
+using System.IO;
 
 
 namespace Ants.Map
@@ -87,11 +88,10 @@ namespace Ants.Map
         /// <summary>
         /// Map Paths Combobox collection.
         /// </summary>
-        private ObservableCollection<string> _mapPaths = new ObservableCollection<string>
-            {
-                @"Map\Source\map.txt",
-                @"Map\Source\map2.txt"
-            };
+        private ObservableCollection<string> _mapPaths;
+
+
+
         public ObservableCollection<string> MapPaths
         {
             get { return _mapPaths; }
@@ -116,6 +116,26 @@ namespace Ants.Map
             }
         }
 
+
+        public ObservableCollection<ComboBoxItem> CurrentPaths { get; set; }
+        /// <summary>
+        /// selected current path
+        /// </summary>
+        private ComboBoxItem _selectedCurrentPath;
+        public ComboBoxItem SelectedCurrentPath 
+        { 
+            get
+            {
+                return _selectedCurrentPath;
+            }
+            set
+            {
+                _selectedCurrentPath = value;
+                OnPropertyChanged("SelectedCurrentPath");
+            }
+        }
+
+
         /// <summary>
         /// holds all the data from current iteration
         /// </summary>
@@ -126,7 +146,7 @@ namespace Ants.Map
             set
             {
                 _currentState = value;
-                OnPropertyChanged("SelectedMapPath");
+                OnPropertyChanged("CurrentState");
             }
         }
 
@@ -136,18 +156,50 @@ namespace Ants.Map
         {
             InitializeComponent();
             MapInputGrid.DataContext = this;
+
+            CurrentPaths = new ObservableCollection<ComboBoxItem>();
+            CurrentPaths.Add(new ComboBoxItem { Content = "Brak" });
+            CurrentPaths.Add(new ComboBoxItem { Content = "Wszystkie" });
+            SelectedCurrentPath = CurrentPaths.ElementAt(0);
+            PropertyChanged += SelectedCurrentPathPropertyChanged;
+
+
+            MapPaths = new ObservableCollection<string>();
+            string[] fileEntries = Directory.GetFiles(@"Map\Source");
+            foreach (string fileName in fileEntries)
+            {
+                MapPaths.Add(fileName);
+            }
             SelectedMapPath = MapPaths.ElementAt(0);
             _mapControl = mapControl;
+
+        }
+
+
+        public static void ProcessFile(string path)
+        {
+            Console.WriteLine("Processed file '{0}'.", path);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
 
+        }
+
+        private void SelectedCurrentPathPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedCurrentPath")
+            {
+                //Console.WriteLine("A property has changed: " + CurrentPaths.IndexOf(SelectedCurrentPath));
+                UpdateMap(CurrentState, CurrentPaths.IndexOf(SelectedCurrentPath));
+            }
         }
 
         public void LoadMapClick(object sender, RoutedEventArgs e)
@@ -168,20 +220,34 @@ namespace Ants.Map
         }
 
 
-        public void UpdateMap(IOutputService output)
+        public void UpdateMap(IOutputService output, int selectedCurrentPathIndex=-1)
         {
             if (output != null)
             {
                 CurrentState = output;
-
+                if (output.CurrentIteration == 1 && CurrentPaths.Count==2)
+                {
+                    GenerateTemporaryPathsNamesToComboBox(output.CurrentPaths.Count);
+                }
                 _mapControl.LoadMapView(Map);
                 if (ShowPheromones)
                     _mapControl.UpdatePheromones(output.Pheromones);
-                if (ShowCurrentPaths)
-                    _mapControl.UpdateCurrentPaths(output.CurrentPaths);
                 if (ShowBestPath)
                     _mapControl.UpdateBestPath(output.BestPath);
                 CurrentIteration = output.CurrentIteration;
+                if (selectedCurrentPathIndex == -1)
+                {
+                    selectedCurrentPathIndex = CurrentPaths.IndexOf(SelectedCurrentPath);
+                }
+                    _mapControl.UpdateCurrentPaths(output.CurrentPaths, selectedCurrentPathIndex);
+            }
+        }
+
+        private void GenerateTemporaryPathsNamesToComboBox(int numberOfPaths)
+        {
+            for(int i = 0 ; i < numberOfPaths ; i++)
+            {
+                CurrentPaths.Add(new ComboBoxItem { Content = 1+i+". Mrówka "});
             }
         }
 

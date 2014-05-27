@@ -9,11 +9,8 @@
         int NumberOfIterations { get; set; }
         int NumberOfAnts { get; set; }
 
-        bool CheckBox1 { get; set; }
-        bool CheckBox2 { get; set; }
-        bool CheckBox3 { get; set; }
-        bool CheckBox4 { get; set; }
-        bool CheckBox5 { get; set; }
+        bool ACS { get; set; }
+        bool AsRank { get; set; }
         bool DeleteLoops{ get; set; }
     }
 }

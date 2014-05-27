@@ -35,10 +35,11 @@
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="Wczytywanie mapy" Margin="10,10,9,10" Grid.RowSpan="3">
-            <StackPanel>
+            <StackPanel Margin="0,0,-3,-22">
                 <ComboBox ItemsSource="{Binding Path=MapPaths}" 
                           IsEditable="True" 
                           Text="{Binding Path=SelectedMapPath}"/>
+
                 <Button Content="Wczytaj mape"
                         Click="LoadMapClick"/>
             </StackPanel>
@@ -46,12 +47,12 @@
         <GroupBox Grid.Column="1" Header="Wyświetl" Margin="0,10,19,10" Grid.RowSpan="3">
             <StackPanel>
                 <CheckBox Content="Feromony" Background="#FFFF0202" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowPheromones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Content="Chwilowa ścieżka" Background="Cyan"  Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowCurrentPaths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Content="Najlepsza ścieżka" Background="Lime" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding Path=ShowBestPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Content="Najlepsza ścieżka" Background="Lime" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" IsChecked="{Binding ShowBestPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox  IsEditable="False" ItemsSource="{Binding Path = CurrentPaths}" SelectedItem="{Binding Path=SelectedCurrentPath, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Symulacja krokowa" Margin="151,10,0,10" Grid.ColumnSpan="2" Grid.RowSpan="3">
-            <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True" Margin="0,0,0,-1">
+            <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ShowGridLines="False" Margin="0,0,0,-1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100*"/>
                     <RowDefinition Height="100*"/>
@@ -60,11 +61,20 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Liczba iteracji w kroku" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"  Margin="-5,2,123,12" Width="71"/>
+                <Label Content="Iter. w kroku:" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"  Margin="-5,2,101,13" Width="93" RenderTransformOrigin="0.5,0.5">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-0.525"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
 
-                <TextBox HorizontalAlignment="Left" Text="{Binding NumOfSteps}" Height="28" Margin="71,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44"/>
-                <TextBox HorizontalAlignment="Left" Text="{Binding CurrentIteration}" Height="23" Margin="71,6,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44" Grid.Row="1" IsEnabled="False"/>
-                <Label Content="Wykonano iteracji:" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"  Margin="4,5,123,10" Grid.Row="1" Width="62"/>
+                <TextBox HorizontalAlignment="Left" Text="{Binding NumOfSteps}" Height="28" Margin="96,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44"/>
+                <TextBox HorizontalAlignment="Left" Text="{Binding CurrentIteration}" Height="23" Margin="96,6,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44" Grid.Row="1" IsEnabled="False"/>
+                <Label Content="Wykonano iter." Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"  Margin="-5,5,0,10" Grid.Row="1" Width="96"/>
 
             </Grid>
         </GroupBox>

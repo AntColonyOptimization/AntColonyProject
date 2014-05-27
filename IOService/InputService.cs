@@ -95,77 +95,32 @@
             }
         }
 
-        private bool _checkBox1;
+        private bool _ACS;
 
-        public bool CheckBox1
+        public bool ACS
         {
             get
             {
-                return _checkBox1;
+                return _ACS;
             }
             set
             {
-                _checkBox1 = value;
-                NotifyPropertyChanged("CheckBox1");
-            }
-        }
-
-        private bool _checkBox2;
-
-        public bool CheckBox2
-        {
-            get
-            {
-                return _checkBox2;
-            }
-            set
-            {
-                _checkBox2 = value;
-                NotifyPropertyChanged("CheckBox2");
-            }
-        }
-
-        private bool _checkBox3;
-
-        public bool CheckBox3
-        {
-            get
-            {
-                return _checkBox3;
-            }
-            set
-            {
-                _checkBox3 = value;
-                NotifyPropertyChanged("CheckBox3");
-            }
-        }
-
-        private bool _checkBox4;
-
-        public bool CheckBox4
-        {
-            get
-            {
-                return _checkBox4;
-            }
-            set
-            {
-                _checkBox4 = value;
+                _ACS = value;
                 NotifyPropertyChanged("CheckBox4");
             }
         }
 
-        private bool _checkBox5;
+        private bool _asRank;
 
-        public bool CheckBox5
+        public bool AsRank
         {
             get
             {
-                return _checkBox5;
+                return _asRank;
             }
             set
             {
-                _checkBox5 = value;
+                _asRank = value;
                 NotifyPropertyChanged("CheckBox5");
             }
         }
@@ -188,18 +143,15 @@
 
         public InputService()
         {
-            Alpha = 3.0;
-            Beta = 3.0;
+            Alpha = 2;
+            Beta = 2;
             Rho = 0.1;
-            Q = 5.0;
+            Q = 3.0;
             NumberOfIterations = 100;
             NumberOfAnts = 3;
 
-            CheckBox1 = false;
-            CheckBox2 = false;
-            CheckBox3 = false;
-            CheckBox4 = false;
-            CheckBox5 = false;
+            ACS = false;
+            AsRank = false;
             DeleteLoops = false;
         }
 

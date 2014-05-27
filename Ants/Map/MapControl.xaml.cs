@@ -124,26 +124,34 @@ namespace Ants.Map
             }
         }
 
-        public void UpdateCurrentPaths(IEnumerable<List<Coordinates>> currentPaths)
+        public void UpdateCurrentPaths(IEnumerable<List<Coordinates>> currentPaths,int pathNumber = 0)
         {
-            //int i = 0, j = 0;
-            //var c = 1;
-            foreach (var pathsRow in currentPaths)
+            if (pathNumber != 0)
             {
-                DrawLine(pathsRow, Color.FromScRgb(1, 0, 255, 255));
-                //c++;
-                //foreach (var path in pathsRow)
-                //{
-                //    var ellipse = new Ellipse {Width = CellWidth/3, Height = CellWidth/3};
-                //    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 255) };
-                //    ellipse.Fill = brush;
-                //    ellipse.SetValue(Grid.ColumnProperty, path.Width);
-                //    ellipse.SetValue(Grid.RowProperty, path.Height);
-                //    MapControlGrid.Children.Add(ellipse);
-                //    i++;
-                //}
-                //i = 0;
-                //j++;
+                if(pathNumber!=1)
+                {
+                    DrawLine(currentPaths.ElementAt(pathNumber-2), Color.FromScRgb(1, 0, 255, 255));
+                }
+                else 
+                {
+                    foreach (var pathsRow in currentPaths)
+                    {
+                        DrawLine(pathsRow, Color.FromScRgb(1, 0, 255, 255));
+                        //c++;
+                        //foreach (var path in pathsRow)
+                        //{
+                        //    var ellipse = new Ellipse {Width = CellWidth/3, Height = CellWidth/3};
+                        //    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 255) };
+                        //    ellipse.Fill = brush;
+                        //    ellipse.SetValue(Grid.ColumnProperty, path.Width);
+                        //    ellipse.SetValue(Grid.RowProperty, path.Height);
+                        //    MapControlGrid.Children.Add(ellipse);
+                        //    i++;
+                        //}
+                        //i = 0;
+                        //j++;
+                    }
+                }
             }
         }
 

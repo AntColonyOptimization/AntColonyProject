@@ -8,6 +8,7 @@ namespace Ants
     using IOService.Core;
     using System.Threading.Tasks;
     using Ants.Map;
+    using Ants.Algorithm;
 
     public partial class MainWindow : Window
     {
@@ -23,8 +24,11 @@ namespace Ants
 
         private readonly MapInput _mapInput;
 
+        private readonly TheoreticalData _theory;
+
         public MainWindow()
         {
+            _theory = new TheoreticalData();
             _mapControl = new MapControl();
             _mapInput = new MapInput(_mapControl);
             InitializeComponent();
@@ -45,6 +49,9 @@ namespace Ants
             
             ConfigGrid.Children.Add(_inputView);
             ConfigGrid.Width = _inputView.Width;
+
+            TheoryGrid.Children.Add(_theory);
+            TheoryGrid.Width = _theory.Width;
         }
 
         private async void RunAlgorithm(IInputService input)
@@ -57,7 +64,7 @@ namespace Ants
             if (_input == null || _algorithm == null || _input != input)
             {
                 _input = input;
-                _algorithm = new Algorithm(input, _mapInput.Map);
+                _algorithm = new AlgorithmLogic(input, _mapInput.Map);
             }
 
             IOutputService output;
@@ -81,7 +88,7 @@ namespace Ants
             if (input == null || _algorithm == null || _input != input)
             {
                 _input = input;
-                _algorithm = new Algorithm(input, _mapInput.Map);
+                _algorithm = new AlgorithmLogic(input, _mapInput.Map);
             }
             int stepsCounter = 0;
             IOutputService output = new OutputService();
@@ -109,7 +116,7 @@ namespace Ants
                 return;
             }
             _input = input;
-            _algorithm = new Algorithm(input, _mapInput.Map);
+            _algorithm = new AlgorithmLogic(input, _mapInput.Map);
             _mapInput.Reset();
         }
 

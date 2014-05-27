@@ -18,24 +18,38 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TabControl BorderThickness="1" BorderBrush="White"  Background="#FF001020" Width="Auto" Margin="10,0,-140,10">
+            <TabControl BorderThickness="1" BorderBrush="White"  Background="#FF001020" Width="Auto" Margin="10,0,256,10" Grid.ColumnSpan="2">
                 <TabItem Header="Mapa" Foreground="Blue" Background="#FF001020" Width="Auto">
-                    
+
                     <Grid x:Name="MapGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65*"/>
+                            <ColumnDefinition Width="451*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Grid x:Name="MapViewGrid" />
-                        <Grid Grid.Row="1" x:Name="MapConfigGrid" />
+                        <Grid x:Name="MapViewGrid" Grid.ColumnSpan="2" />
+                        <Grid Grid.Row="1" x:Name="MapConfigGrid" Grid.ColumnSpan="2" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="Dane techniczne" Foreground="Blue"  Background="#FF001020"></TabItem >
-                <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020"></TabItem>
+                <TabItem Header="Dane techniczne" Foreground="Blue"  Background="#FF001020">
+                    <Grid x:Name="MapG">
+                        <Grid.RowDefinitions>
+
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="TheoryGrid" />
+                    </Grid>
+                </TabItem >
+                <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020">
+                    
+                </TabItem>
             </TabControl>
             <Grid Grid.Column="1" x:Name="ConfigGrid" Margin="170,-96,0,0">
-            
+
             </Grid>
 
         </Grid>

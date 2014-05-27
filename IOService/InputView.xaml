@@ -27,8 +27,6 @@
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
-                <RowDefinition Height="100*"/>
-                <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -42,25 +40,15 @@
             <Label Content="Liczba iteracji" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
             <Label Content="Liczba mrówek" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
 
-            <Label Content="Checkbox1" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Checkbox2" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Checkbox3" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Checkbox4" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-            <Label Content="Checkbox5" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-
             <TextBox Grid.Column="1" Grid.Row="0" Width="75" Text="{Binding Path=Alpha}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="1" Width="75" Text="{Binding Path=Beta}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="2" Width="75" Text="{Binding Path=Rho}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="3" Width="75" Text="{Binding Path=Q}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="4" Width="75" Text="{Binding Path=NumberOfIterations}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="5" Width="75" Text="{Binding Path=NumberOfAnts}" VerticalAlignment="Center"/>
-
-            <CheckBox Grid.Column="1" Grid.Row="6" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox1" Foreground="White" IsChecked="{Binding Path=CheckBox1}"/>
-            <CheckBox Grid.Column="1" Grid.Row="7" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox2" Foreground="White" IsChecked="{Binding Path=CheckBox2}"/>
-            <CheckBox Grid.Column="1" Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox3" Foreground="White" IsChecked="{Binding Path=CheckBox3}"/>
-            <CheckBox Grid.Column="1" Grid.Row="9" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox4" Foreground="White" IsChecked="{Binding Path=CheckBox4}"/>
-            <CheckBox Grid.Column="1" Grid.Row="10" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Checkbox5" Foreground="White" IsChecked="{Binding Path=CheckBox5}"/>
-            <CheckBox Grid.Row="11" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="14,9,1,8"/>
+            <CheckBox Grid.Row="6" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ACS" Foreground="White" IsChecked="{Binding Path=ACS}" Margin="17,10,24,8"/>
+            <CheckBox Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="AsRank" Foreground="White" IsChecked="{Binding Path=AsRank}" Margin="18,10,26,10"/>
+            <CheckBox Grid.Row="9" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="18,10,0,8"/>
 
         </Grid>
         <Button Content="Reset" Canvas.Left="26" Canvas.Top="472" Width="150" Click="Button_Click_2" RenderTransformOrigin="0.453,2.091"/>

@@ -53,15 +53,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Algorithm\TheoreticalData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Algorithm\Algorithm.cs" />
+    <Compile Include="Algorithm\AlgorithmLogic.cs" />
     <Compile Include="Algorithm\Coordinates.cs" />
     <Compile Include="Algorithm\IAlgorithm.cs" />
     <Compile Include="Algorithm\IOutputService.cs" />
     <Compile Include="Algorithm\OutputService.cs" />
+    <Compile Include="Algorithm\TheoreticalData.xaml.cs">
+      <DependentUpon>TheoreticalData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -151,6 +158,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img.jpg" />
     <Content Include="Map\Source\map2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
