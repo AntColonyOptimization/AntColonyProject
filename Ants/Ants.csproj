@@ -53,6 +53,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Algorithm\Results.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Algorithm\TheoreticalData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -66,6 +70,9 @@
     <Compile Include="Algorithm\IAlgorithm.cs" />
     <Compile Include="Algorithm\IOutputService.cs" />
     <Compile Include="Algorithm\OutputService.cs" />
+    <Compile Include="Algorithm\Results.xaml.cs">
+      <DependentUpon>Results.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Algorithm\TheoreticalData.xaml.cs">
       <DependentUpon>TheoreticalData.xaml</DependentUpon>
     </Compile>

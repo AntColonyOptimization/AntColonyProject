@@ -52,16 +52,17 @@
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Symulacja krokowa" Margin="151,10,0,10" Grid.ColumnSpan="2" Grid.RowSpan="3">
-            <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ShowGridLines="False" Margin="0,0,0,-1">
+            <Grid x:Name="DataGrid" Width="{Binding ActualWidth, Mode=OneWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ShowGridLines="False" Margin="0,0,0,-1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100*"/>
                     <RowDefinition Height="100*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="27"/>
+                    <ColumnDefinition Width="162"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Iter. w kroku:" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"  Margin="-5,2,101,13" Width="93" RenderTransformOrigin="0.5,0.5">
+                <Label Content="Iter. w kroku:" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"  Margin="-5,2,101,14" Width="93" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     <Label.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -72,9 +73,9 @@
                     </Label.RenderTransform>
                 </Label>
 
-                <TextBox HorizontalAlignment="Left" Text="{Binding NumOfSteps}" Height="28" Margin="96,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44"/>
-                <TextBox HorizontalAlignment="Left" Text="{Binding CurrentIteration}" Height="23" Margin="96,6,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44" Grid.Row="1" IsEnabled="False"/>
-                <Label Content="Wykonano iter." Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"  Margin="-5,5,0,10" Grid.Row="1" Width="96"/>
+                <TextBox HorizontalAlignment="Left" Text="{Binding NumOfSteps}" Height="28" Margin="69,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44" Grid.Column="1"/>
+                <TextBox HorizontalAlignment="Left" Text="{Binding CurrentIteration}" Height="23" Margin="69,6,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="44" Grid.Row="1" IsEnabled="False" Grid.Column="1"/>
+                <Label Content="Wykonano iter." Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"  Margin="-5,5,0,10" Grid.Row="1" Width="96" Grid.ColumnSpan="2"/>
 
             </Grid>
         </GroupBox>

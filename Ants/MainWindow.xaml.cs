@@ -10,6 +10,7 @@ namespace Ants
     using Ants.Map;
     using Ants.Algorithm;
 
+
     public partial class MainWindow : Window
     {
         private const int _delay = 10;
@@ -26,8 +27,11 @@ namespace Ants
 
         private readonly TheoreticalData _theory;
 
+        private readonly Results _results;
+
         public MainWindow()
         {
+            _results = new Results();
             _theory = new TheoreticalData();
             _mapControl = new MapControl();
             _mapInput = new MapInput(_mapControl);
@@ -52,6 +56,9 @@ namespace Ants
 
             TheoryGrid.Children.Add(_theory);
             TheoryGrid.Width = _theory.Width;
+
+            ResultsGrid.Children.Add(_results);
+
         }
 
         private async void RunAlgorithm(IInputService input)
@@ -123,6 +130,7 @@ namespace Ants
         private void UpdateState(IOutputService output)
         {
             _mapInput.UpdateMap(output);
+            _results.UpdateResults(output);
         }
     }
 }

@@ -8,6 +8,8 @@
         double Q { get; set; }
         int NumberOfIterations { get; set; }
         int NumberOfAnts { get; set; }
+        double Sigma{ get; set; }
+        double Q0 { get; set; }
 
         bool ACS { get; set; }
         bool AsRank { get; set; }

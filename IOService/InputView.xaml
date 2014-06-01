@@ -15,8 +15,9 @@
 
         <Button Content="Symulacja krokowa" Canvas.Left="26" Canvas.Top="418" Width="150" Click="Button_Click_1"/>
 
-        <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="400" ScrollViewer.VerticalScrollBarVisibility="Disabled" ShowGridLines="True">
+        <Grid x:Name="DataGrid" Width="{Binding ActualWidth, ElementName=canvas, Mode=OneWay}" Height="400" ShowGridLines="true" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
             <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
@@ -46,9 +47,13 @@
             <TextBox Grid.Column="1" Grid.Row="3" Width="75" Text="{Binding Path=Q}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="4" Width="75" Text="{Binding Path=NumberOfIterations}" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="5" Width="75" Text="{Binding Path=NumberOfAnts}" VerticalAlignment="Center"/>
-            <CheckBox Grid.Row="6" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ACS" Foreground="White" IsChecked="{Binding Path=ACS}" Margin="17,10,24,8"/>
-            <CheckBox Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="AsRank" Foreground="White" IsChecked="{Binding Path=AsRank}" Margin="18,10,26,10"/>
-            <CheckBox Grid.Row="9" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="18,10,0,8"/>
+            <CheckBox Grid.Row="6" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="ACS" FontSize="16" Foreground="White" IsChecked="{Binding Path=ACS}" Margin="10,10,34,9"/>
+            <CheckBox Grid.Row="8" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center" Content="AsRank" FontSize="16" Foreground="White" IsChecked="{Binding Path=AsRank}" Margin="10,10,34,6" Height="21"/>
+            <CheckBox Grid.Row="10" Width="182" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Content="Delete Loops" Foreground="White" IsChecked="{Binding Path=DeleteLoops}" Grid.ColumnSpan="2" Margin="10,11,9,0" Height="26"/>
+            <Label Content="Sigma" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16" Margin="5,36,4,6" Grid.RowSpan="2"/>
+            <TextBox Grid.Column="1" Grid.Row="9" Width="75" Text="{Binding Sigma}" VerticalAlignment="Center" Margin="0,4,0,10"/>
+            <Label Content="q0" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16" Margin="4,36,5,6" Grid.RowSpan="2"/>
+            <TextBox Grid.Column="1" Grid.Row="7" Width="75" Text="{Binding Q0}" VerticalAlignment="Center" Margin="0,4,2,10"/>
 
         </Grid>
         <Button Content="Reset" Canvas.Left="26" Canvas.Top="472" Width="150" Click="Button_Click_2" RenderTransformOrigin="0.453,2.091"/>

@@ -45,8 +45,14 @@
                     </Grid>
                 </TabItem >
                 <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020">
-                    
-                </TabItem>
+                    <Grid x:Name="Results">
+                        <Grid.RowDefinitions>
+
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="ResultsGrid" />
+        </Grid>
+        </TabItem>
             </TabControl>
             <Grid Grid.Column="1" x:Name="ConfigGrid" Margin="170,-96,0,0">
 

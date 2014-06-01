@@ -110,6 +110,21 @@
             }
         }
 
+        private double _q0 = 0.6;
+
+        public double Q0
+        {
+            get
+            {
+                return _q0;
+            }
+            set
+            {
+                _q0 = value;
+                NotifyPropertyChanged("q0");
+            }
+        }
+
         private bool _asRank;
 
         public bool AsRank
@@ -122,6 +137,21 @@
             {
                 _asRank = value;
                 NotifyPropertyChanged("CheckBox5");
+            }
+        }
+
+        private double _sigma = 2;
+
+        public double Sigma
+        {
+            get
+            {
+                return _sigma;
+            }
+            set
+            {
+                _sigma = value;
+                NotifyPropertyChanged("Sigma");
             }
         }
 

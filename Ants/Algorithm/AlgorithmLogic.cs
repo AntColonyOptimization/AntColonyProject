@@ -25,6 +25,9 @@ namespace Ants
         private readonly double pheromoneInit;
         private readonly int numAnts;
         private readonly int numIter;
+        private double sigma;
+        private double q0;
+        private double ACSPher0;
         private int bestLength;
         private bool isFinished;
 
@@ -77,6 +80,9 @@ namespace Ants
             flagDeleteLoops = input.DeleteLoops;
             flagAsRanks = input.AsRank;
             flagACS = input.ACS;
+            q0 = input.Q0;
+            sigma = input.Sigma;
+            ACSPher0 = Q / (Math.Sqrt(map.Width * map.Width + map.Height * map.Height));
             for (int i = 0; i < numAnts; i++)
             {
                 path.Add(new List<Coordinates>());
@@ -94,7 +100,7 @@ namespace Ants
                 {
                     BuildPath(_map);
                 }
-                UpdatePheromones(_map);//pheromones are updated after all the ants in one operation found path
+                UpdatePheromone(_map);//pheromones are updated after all the ants in one operation found path
                 mainIterator++;
 
                 _outputService.Pheromones = pheromones;
@@ -231,6 +237,28 @@ namespace Ants
                 }
             }
 
+            if(flagACS)
+            {
+                double p0 = random.NextDouble();
+                double max = 0;
+                Coordinates maxCoordinates = new Coordinates(0,0);
+                if(p0<=q0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if(max < probabilities[i, j])
+                            {
+                                max =  probabilities[i, j];
+                                maxCoordinates = new Coordinates(i,j);
+                            }
+                        }
+                    }
+                    return maxCoordinates;
+                }
+            }
+
             double p = random.NextDouble();
 
             for (int i = 0; i < cumulativeProbs.Length - 1; ++i)
@@ -258,6 +286,10 @@ namespace Ants
                 next.SetOffset(currentPos);
                 path[currentAnt].Add(next);
 
+                if (flagACS)
+                {
+                    pheromones[next.Height][next.Width] = (1.0 - rho) * pheromones[next.Height][next.Width] + ACSPher0;
+                }
                 numbersOfVisits[next.Height, next.Width]++;
             }
             path[currentAnt].Add(map.Destination);
@@ -307,15 +339,49 @@ namespace Ants
             //stop conditions, last found must be next to dest.
         }
 
-        private void UpdatePheromones(Map.Map map)
+        private void UpdatePheromone(Map.Map map)
+        {
+            if(flagAsRanks)
+            {
+                updatePheromoneASrank(map);
+            }
+            else if(flagACS)
+            {
+                updatePheromonesACS(map);
+            }
+            else
+            {
+                UpdatePheromoneRegular(map);
+            }
+        }
+
+        private void updatePheromonesACS(Map.Map map)
+        {
+            double decrease = 0;
+            double increase = 0;
+            for (int i = 0; i < map.Height; i++)
+            {
+                for (int j = 0; j < map.Width; j++)
+                {
+                    if (!(i == map.Start.Height && j == map.Start.Width) && !(i == map.Destination.Height && j == map.Destination.Width))
+                    {
+                        if (bestPath.Contains(new Coordinates(i, j)))
+                        {
+                            decrease = (1.0 - rho) * pheromones[i][j];
+                            increase = (Q / bestLength);
+                        }
+                    }
+                    pheromones[i][j] = decrease + increase;
+                }
+            }
+            UpdatePheromoneOnBestPath(map);
+        }
+
+        private void UpdatePheromoneRegular(Map.Map map)
         {
             double length = 0;
             double decrease = 0;
             double increase = 0;
-            if (flagAsRanks)
-            {
-                path.Sort((a, b) => a.Count.CompareTo(b.Count));
-            }
             for (int k = 0; k < numAnts; k++)
             {
                 length = path[k].Count;
@@ -327,28 +393,58 @@ namespace Ants
                         {
                             decrease = (1.0 - rho) * pheromones[i][j];
                             increase = 0.0;
-                            if (flagAsRanks)
+                            if (path[k].Contains(new Coordinates(i, j)))
                             {
-                                if (path[k].Contains(new Coordinates(i, j)))
-                                {
-                                    increase = ((numAnts - k - 1) * Q / length);
-                                }
-                                else if (bestPath.Contains(new Coordinates(i, j)))
-                                {
-                                    increase = (0.2 * Q / bestLength);
-                                }
+                                increase = (Q / length);
                             }
-                            else
-                            {
-                                if (path[k].Contains(new Coordinates(i, j)))
-                                {
-                                    increase = (Q / length);
-                                }
-                            }
-
                             pheromones[i][j] = decrease + increase;
                         }
                     }
+                }
+            }
+        }
+
+        private void updatePheromoneASrank(Map.Map map)
+        {
+            double length = 0;
+            double decrease = 0;
+            double increase = 0;
+            path.Sort((a, b) => a.Count.CompareTo(b.Count));
+            for (int k = 0; k < sigma; k++)
+            {
+                length = path[k].Count;
+                for (int i = 0; i < map.Height; i++)
+                {
+                    for (int j = 0; j < map.Width; j++)
+                    {
+                        if (!(i == map.Start.Height && j == map.Start.Width) && !(i == map.Destination.Height && j == map.Destination.Width))
+                        {
+                            decrease = (1.0 - rho) * pheromones[i][j];
+                            increase = 0.0;
+                            if (path[k].Contains(new Coordinates(i, j)))
+                            {
+                                increase = ((sigma - k - 1) * Q / length);
+                            }
+                            pheromones[i][j] = decrease + increase;
+                        }
+                    }
+                }
+            }
+            UpdatePheromoneOnBestPath(map);
+        }
+
+        private void UpdatePheromoneOnBestPath(Map.Map map)
+        {
+            double increase = 0;
+            for (int i = 0; i < map.Height; i++)
+            {
+                for (int j = 0; j < map.Width; j++)
+                {
+                    if (bestPath.Contains(new Coordinates(i, j)))
+                    {
+                        increase = (Q / bestLength);
+                    }
+                    pheromones[i][j] += increase;
                 }
             }
         }
