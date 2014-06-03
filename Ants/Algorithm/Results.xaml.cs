@@ -30,8 +30,7 @@ namespace Ants.Algorithm
         private ObservableCollection<AntData> _antsCollection = new ObservableCollection<AntData>();
         public ObservableCollection<AntData> AntsCollection
         {
-            get { return _antsCollection; } 
-            
+            get { return _antsCollection; }
         }
 
         private int _bestPathLength = 0;
@@ -60,8 +59,10 @@ namespace Ants.Algorithm
 
         public Results()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            ResultsGr.DataContext = this;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]
@@ -74,7 +75,6 @@ namespace Ants.Algorithm
             }
 
         }
-
 
         public void UpdateResults(IOutputService output)
         {
@@ -92,32 +92,18 @@ namespace Ants.Algorithm
         }
     }
 
-
-
-    public class AntData: INotifyPropertyChanged
+    public class AntData 
     {
-        int _antNr;
-        int _length;
-        public int AntNr { get { return _antNr; } set { _antNr = value; OnPropertyChanged("AntNr"); } }
-        public int Length { get { return _length; } set { _length = value; OnPropertyChanged("Length"); } }
+        public int AntNr { get; set; }
+
+        public int Length { get; set; }
+
         public AntData(int antNr, int length)
         {
-            _antNr = antNr;
-            _length = length;
-            OnPropertyChanged("AntsCollection");
+            AntNr = antNr;
+            Length = length;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-
-        }
     }
 
 }

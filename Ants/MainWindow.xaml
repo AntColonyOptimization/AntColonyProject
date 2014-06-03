@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Ants.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -44,15 +45,9 @@
                         <Grid x:Name="TheoryGrid" />
                     </Grid>
                 </TabItem >
-                <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020">
-                    <Grid x:Name="Results">
-                        <Grid.RowDefinitions>
-
-                        </Grid.RowDefinitions>
-
-                        <Grid x:Name="ResultsGrid" />
-        </Grid>
-        </TabItem>
+                <TabItem Header="Wyniki" Foreground="Blue"  Background="#FF001020"> 
+                    <Grid x:Name="ResultsGrid" />
+                </TabItem>
             </TabControl>
             <Grid Grid.Column="1" x:Name="ConfigGrid" Margin="170,-96,0,0">
 

@@ -58,7 +58,6 @@ namespace Ants
             TheoryGrid.Width = _theory.Width;
 
             ResultsGrid.Children.Add(_results);
-
         }
 
         private async void RunAlgorithm(IInputService input)
