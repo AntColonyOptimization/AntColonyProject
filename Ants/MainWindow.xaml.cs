@@ -85,7 +85,10 @@ namespace Ants
             IOutputService output;
             while (!_algorithm.IsFinished() && !_pause)
             {
-                output = _algorithm.Execute();
+                output = await Task.Run(() =>
+                    {
+                        return _algorithm.Execute();
+                    });
                 UpdateState(output);
                 await Task.Delay(_delay);
             }
