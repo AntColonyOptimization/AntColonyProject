@@ -13,6 +13,7 @@ namespace Ants
 
     public partial class MainWindow : Window
     {
+        private bool _pause = false;
         private const int _delay = 10;
 
         private IAlgorithm _algorithm;
@@ -40,6 +41,7 @@ namespace Ants
             _inputView.RunAlgorithm += RunAlgorithm;
             _inputView.StepAlgorithm += StepAlgorithm;
             _inputView.ResetAlgorithm += ResetAlgorithm;
+            _inputView.PauseAlgorithm += PauseAlgorithm;
 
             //Algorithm a = new Algorithm();
             //a.Execute();
@@ -60,8 +62,15 @@ namespace Ants
             ResultsGrid.Children.Add(_results);
         }
 
+        void PauseAlgorithm(IInputService input)
+        {
+            _pause = true;
+        }
+
         private async void RunAlgorithm(IInputService input)
         {
+            _pause = false;
+
             if (_mapInput.Map == null)
             {
                 MessageBox.Show("Nie wczytano mapy.");
@@ -74,14 +83,17 @@ namespace Ants
             }
 
             IOutputService output;
-            while (!_algorithm.IsFinished())
+            while (!_algorithm.IsFinished() && !_pause)
             {
                 output = _algorithm.Execute();
                 UpdateState(output);
                 await Task.Delay(_delay);
             }
             //ustawiane na nulla, żeby przy kolejnym uruchomieniu pełnego algorytmu podał nowe dane z interfejsu w konstruktorze
-            _algorithm = null;
+            if (!_pause)
+            {
+                _algorithm = null;
+            }
         }
 
         private void StepAlgorithm(IInputService input)

@@ -3,15 +3,18 @@
     using IOService.Core;
     using System.Windows.Controls;
 
-    public delegate void RunAlgorithmEventHandler(IInputService input);
+    public delegate void InputEventHandler(IInputService input);
 
     public partial class InputView : UserControl
     {
+        private bool _algorithmEnabled = false;
+
         private IInputService Input { get; set; }
 
-        public event RunAlgorithmEventHandler RunAlgorithm;
-        public event RunAlgorithmEventHandler StepAlgorithm;
-        public event RunAlgorithmEventHandler ResetAlgorithm;
+        public event InputEventHandler RunAlgorithm;
+        public event InputEventHandler PauseAlgorithm;
+        public event InputEventHandler StepAlgorithm;
+        public event InputEventHandler ResetAlgorithm;
 
         public InputView()
         {
@@ -23,9 +26,23 @@
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if(RunAlgorithm != null)
+            if (!_algorithmEnabled)
             {
-                RunAlgorithm(Input);
+                if (RunAlgorithm != null)
+                {
+                    RunAlgorithm(Input);
+                    _algorithmEnabled = true;
+                    run_pauseButton.Content = "Pauza";
+                }
+            }
+            else
+            {
+                if(PauseAlgorithm != null)
+                {
+                    PauseAlgorithm(Input);
+                    _algorithmEnabled = false;
+                    run_pauseButton.Content = "Uruchom algorytm";
+                }
             }
         }
 

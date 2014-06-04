@@ -11,7 +11,7 @@
                 <GradientStop Offset="1.0" Color="#001932"/>
             </LinearGradientBrush>
         </Canvas.Background>
-        <Button Content="Uruchom algorytm" Canvas.Left="26" Canvas.Top="445" Width="150" Click="Button_Click"/>
+        <Button x:Name="run_pauseButton" Content="Uruchom algorytm" Canvas.Left="26" Canvas.Top="445" Width="150" Click="Button_Click"/>
 
         <Button Content="Symulacja krokowa" Canvas.Left="26" Canvas.Top="418" Width="150" Click="Button_Click_1"/>
 
