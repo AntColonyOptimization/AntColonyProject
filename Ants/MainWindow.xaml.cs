@@ -136,8 +136,8 @@ namespace Ants
                 MessageBox.Show("Nie wczytano mapy.");
                 return;
             }
-            _input = input;
-            _algorithm = new AlgorithmLogic(input, _mapInput.Map);
+            _input = null;
+            _algorithm = null;
             _mapInput.Reset();
         }
 

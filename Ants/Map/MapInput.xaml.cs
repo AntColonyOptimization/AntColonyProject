@@ -265,11 +265,14 @@ namespace Ants.Map
 
         internal void Reset()
         {
-            _mapControl.LoadMapView(Map);
-
+            SelectedCurrentPath = CurrentPaths.ElementAt(0);
+            for (int i = 2; i < CurrentPaths.Count; )
+            {
+                CurrentPaths.RemoveAt(i);
+            }
+            LoadMap();
             NumOfSteps = 1;
             CurrentIteration = 0;
-
         }
 
     }
