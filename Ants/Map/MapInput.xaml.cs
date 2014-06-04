@@ -206,7 +206,7 @@ namespace Ants.Map
         {
             if (!_mapGenerator.ValidateMapPath(SelectedMapPath))
             {
-                MessageBox.Show("Wybrana mapa nie istnieje");
+                MessageBox.Show("Wybrana plik nie istnieje.");
                 return;
             }
             LoadMap();
@@ -215,8 +215,15 @@ namespace Ants.Map
 
         private void LoadMap()
         {
-            Map = _mapGenerator.ReadMapFromFile(SelectedMapPath);
-            _mapControl.LoadMapView(Map);
+            try
+            {
+                Map = _mapGenerator.ReadMapFromFile(SelectedMapPath);
+                _mapControl.LoadMapView(Map);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Podany plik zawiera błędy i nie zostanie obsłużony.");
+            }
         }
 
 
