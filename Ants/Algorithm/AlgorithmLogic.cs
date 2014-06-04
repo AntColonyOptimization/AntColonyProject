@@ -101,6 +101,7 @@ namespace Ants
                     BuildPath(_map);
                 }
                 UpdatePheromone(_map);//pheromones are updated after all the ants in one operation found path
+                regulatePheromones(_map);
                 mainIterator++;
 
                 _outputService.Pheromones = pheromones;
@@ -251,7 +252,7 @@ namespace Ants
                             if(max < probabilities[i, j])
                             {
                                 max =  probabilities[i, j];
-                                maxCoordinates = new Coordinates(i,j);
+                                maxCoordinates = new Coordinates(i-1,j-1);
                             }
                         }
                     }
@@ -365,16 +366,16 @@ namespace Ants
                 {
                     if (!(i == map.Start.Height && j == map.Start.Width) && !(i == map.Destination.Height && j == map.Destination.Width))
                     {
+                        decrease = (1.0 - rho) * pheromones[i][j];
+                        increase = 0;
                         if (bestPath.Contains(new Coordinates(i, j)))
                         {
-                            decrease = (1.0 - rho) * pheromones[i][j];
                             increase = (Q / bestLength);
                         }
+                        pheromones[i][j] = decrease + increase;
                     }
-                    pheromones[i][j] = decrease + increase;
                 }
             }
-            UpdatePheromoneOnBestPath(map);
         }
 
         private void UpdatePheromoneRegular(Map.Map map)
@@ -445,6 +446,20 @@ namespace Ants
                         increase = (Q / bestLength);
                     }
                     pheromones[i][j] += increase;
+                }
+            }
+        }
+
+        private void regulatePheromones(Map.Map map)
+        {
+            for (int i = 0; i < map.Height; i++)
+            {
+                for (int j = 0; j < map.Width; j++)
+                {
+                    if (pheromones[i][j] > 1)
+                    {
+                        pheromones[i][j] = 1;
+                    }
                 }
             }
         }

@@ -158,96 +158,77 @@ namespace Ants.Map
         public void UpdateBestPath(IEnumerable<Coordinates> bestPath)
         {
             DrawLine(bestPath, Color.FromScRgb(1, 0, 255, 0));
-            ////double x1 = 0;
-            ////double y1 = 0;
-            //var lastCoordinates = new Coordinates(0,0);
-            //foreach (var path in bestPath)
-            //{
-            //    var rec = new Rectangle();
-            //    var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
-            //    rec.Fill = brush;
-            //    rec.SetValue(Grid.ColumnProperty, path.Width);
-            //    rec.SetValue(Grid.RowProperty, path.Height);
-            //    MapControlGrid.Children.Add(rec);
-
-            //    //var newLine = new Line();
-
-            //    //newLine.X1 = x1;
-            //    //newLine.Y1 = y1;
-
-            //    //newLine.SetValue(Grid.ColumnProperty, path.Width);
-            //    //newLine.SetValue(Grid.RowProperty, path.Height);
-            //    //newLine.X2 = path.Width*CellWidth;
-            //    //newLine.Y2 = path.Height*CellWidth;
-            //    //var brush = new SolidColorBrush { Color = Color.FromScRgb(1, 0, 255, 0) };
-            //    //newLine.StrokeThickness = 2;
-            //    //newLine.Stroke = brush;
-            //    //MapControlGrid.Children.Add(newLine);
-
-            //    //x1 = newLine.X2;
-            //    //y1 = newLine.Y2;
-            //}
         }
 
         private void DrawLine(IEnumerable<Coordinates> coordinateses, Color color)
         {
             var path = coordinateses as Coordinates[] ?? coordinateses.ToArray();
-            for (int i = 0; i < path.Count(); i++)
+
+            for (int i = 0; i < path.Count() - 1; i++)
             {
-                var line = new Line();
+                Line line1 = new Line();
+                Line line2 = new Line();
                 if (i == 0)
                 {
-                    line.X1 = CellWidth/2;
-                    line.Y1 = CellWidth/2;
+                    line1.X1 = CellWidth / 2;
+                    line1.Y1 = CellWidth / 2;
                 }
                 else
                 {
                     if (path[i - 1].Height < path[i].Height)
-                        line.Y1 = 0;
+                        line1.Y1 = 0;
                     else if (path[i - 1].Height == path[i].Height)
-                        line.Y1 = CellWidth/2;
+                        line1.Y1 = CellWidth / 2;
                     else if (path[i - 1].Height > path[i].Height)
-                        line.Y1 = CellWidth;
+                        line1.Y1 = CellWidth;
 
                     if (path[i - 1].Width < path[i].Width)
-                        line.X1 = 0;
+                        line1.X1 = 0;
                     else if (path[i - 1].Width == path[i].Width)
-                        line.X1 = CellWidth / 2;
+                        line1.X1 = CellWidth / 2;
                     else if (path[i - 1].Width > path[i].Width)
-                        line.X1 = CellWidth;
-
+                        line1.X1 = CellWidth;
                 }
-                if (i < path.Count()-1)
+                line1.X2 = CellWidth / 2;
+                line1.Y2 = CellWidth / 2;
+
+                line2.X1 = CellWidth / 2;
+                line2.Y1 = CellWidth / 2;
+                if (i < path.Count() - 1)
                 {
                     if (path[i + 1].Height < path[i].Height)
-                        line.Y2 = 0;
+                        line2.Y2 = 0;
                     else if (path[i + 1].Height == path[i].Height)
-                        line.Y2 = CellWidth / 2;
+                        line2.Y2 = CellWidth / 2;
                     else if (path[i + 1].Height > path[i].Height)
-                        line.Y2 = CellWidth;
+                        line2.Y2 = CellWidth;
 
                     if (path[i + 1].Width < path[i].Width)
-                        line.X2 = 0;
+                        line2.X2 = 0;
                     else if (path[i + 1].Width == path[i].Width)
-                        line.X2 = CellWidth / 2;
+                        line2.X2 = CellWidth / 2;
                     else if (path[i + 1].Width > path[i].Width)
-                        line.X2 = CellWidth;
+                        line2.X2 = CellWidth;
                 }
                 else
                 {
-                    line.X2 = CellWidth / 2;
-                    line.Y2 = CellWidth / 2;
+                    line2.X2 = CellWidth / 2;
+                    line2.Y2 = CellWidth / 2;
                 }
-                line.SetValue(Grid.ColumnProperty, path[i].Width);
-                line.SetValue(Grid.RowProperty, path[i].Height);
+                line1.SetValue(Grid.ColumnProperty, path[i].Width);
+                line1.SetValue(Grid.RowProperty, path[i].Height);
+                line2.SetValue(Grid.ColumnProperty, path[i].Width);
+                line2.SetValue(Grid.RowProperty, path[i].Height);
                 var brush = new SolidColorBrush { Color = color };
-                line.StrokeThickness = 2;
-                line.Stroke = brush;
-                MapControlGrid.Children.Add(line);
+                line1.StrokeThickness = 2;
+                line1.Stroke = brush;
+                MapControlGrid.Children.Add(line1);
+                line2.StrokeThickness = 2;
+                line2.Stroke = brush;
+                MapControlGrid.Children.Add(line2);
             }
         }
 
-        //private void Calculat
 
         private double CalculateCellWidth(Map map)
         {
